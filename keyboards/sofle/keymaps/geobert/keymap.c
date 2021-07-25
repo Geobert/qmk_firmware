@@ -106,7 +106,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+-------+--------+--------+--------+------|                             |--------+-------+--------+--------+--------+---------|
   _______,  BP_PIPE, BP_LABK ,BP_SUP,  BP_AMP, BP_COLN,                             KC_P4, RSFT_T(KC_P5), KC_P6, KC_PPLS, KC_PAST, BP_EURO,
   //|------+-------+--------+--------+--------+------|  ===  |             |  ===  |--------+-------+--------+--------+--------+---------|
-  BP_CPERC ,BP_BSLS, BP_LCBR, BP_RCBR, BP_LBRC,BP_RBRC,_______,             RGB_TOG, KC_P1,  KC_P2,  KC_P3,   KC_BSPC, KC_INS,   BP_POUND,
+  BP_CPERC ,BP_BSLS, BP_LCBR, BP_RCBR, BP_LBRC,BP_RBRC,_______,             LAUNCH, KC_P1,  KC_P2,  KC_P3,   KC_BSPC, KC_INS,   BP_POUND,
   //|------+-------+--------+--------+--------+------|  ===  |             |  ===  |--------+-------+--------+--------+--------+---------|
                  _______, _______, _______, BP_GRV, BP_UNDS,                _______, _______, KC_P0,  KC_PDOT, _______
   //            \--------+--------+--------+---------+-------|             |--------+---------+--------+---------+-------/
@@ -277,6 +277,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     } else if (index == 1) {
         switch (get_highest_layer(layer_state)) {
             case _BEPO:
+            case _BLUE:
                 if (clockwise) {
                     tap_code(KC_DEL);
                 } else {
@@ -297,33 +298,6 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                         tap_code16(C(KC_LEFT));
                     }
                 }
-                break;
-            case _BLUE:
-            {
-                bool ctrl = get_mods() == MOD_MASK_CTRL;
-                bool alt = get_mods() == MOD_MASK_ALT;
-                if (clockwise) {
-                    if (ctrl && alt) {
-                        tap_code16(RGB_MOD);
-                    } else if (ctrl) {
-                        tap_code16(RGB_VAI);
-                    } else if (alt) {
-                        tap_code16(RGB_SAI);
-                    } else {
-                        tap_code16(RGB_HUI);
-                    }
-                } else {
-                    if (ctrl && alt) {
-                        tap_code16(RGB_RMOD);
-                    } else if (ctrl) {
-                        tap_code16(RGB_VAD);
-                    } else if (alt) {
-                        tap_code16(RGB_SAD);
-                    } else {
-                        tap_code16(RGB_HUD);
-                    }
-                }
-            }
                 break;
         }
     }
