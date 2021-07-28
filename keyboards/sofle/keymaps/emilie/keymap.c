@@ -45,6 +45,7 @@ char wpm_str[4];
 #define COPY C(BP_C)
 #define PASTE C(BP_V)
 #define BP_POUND ALGR(BP_L)
+#define DISC_MUTE C(BP_AGRV)
 
 // LAYERS SECTION
 enum sofle_layers {
@@ -78,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
   KC_LSFT,   BP_A,   BP_U,    BP_I,    BP_E,   BP_COMM,                   BP_C, RSFT_T(BP_T), RCTL_T(BP_S), BP_R, BP_N, BP_M,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-     BP_CCED , BP_AGRV, BP_Y,    BP_X,    BP_DOT,  BP_K,  KC_MPLY,  LAUNCH,  BP_QUOT, BP_Q,   BP_G,    BP_H,    BP_F,   BP_W ,
+     BP_CCED , BP_AGRV, BP_Y, BP_X,   BP_DOT,  BP_K,  KC_MPLY,  DISC_MUTE,  BP_QUOT, BP_Q,   BP_G,    BP_H,    BP_F,   BP_W ,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
                  KC_DEL, KC_LALT, KC_LCTL, TT(_RED), KC_SPC,     KC_ENT, TT(_BLUE), KC_RALT, KC_BSPC, KC_RSFT
   //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
@@ -92,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+-------+--------+--------+--------+------|                            |--------+-------+--------+--------+--------+---------|
   _______,   UNDO,   KC_LALT, KC_RCTRL, KC_LSFT, TLG,                              KC_BSPC,  KC_LEFT, KC_DOWN, KC_RGHT, KC_LGUI, KC_PSCR,
   //|------+-------+--------+--------+--------+------      |  ===  |      |  ===  |--------+-------+--------+--------+--------+---------|
-    KC_NO,    REDO,    CUT,     COPY,   PASTE, DSCRD,   _______,          CUR_TGL, KEEPASS, KC_HOME,  KC_NO, KC_END,  KC_CAPS,  KC_MUTE,
+    KC_CAPS,  REDO,    CUT,     COPY,   PASTE, DSCRD,   _______,          CUR_TGL, KEEPASS, KC_HOME,  KC_NO, KC_END,  KC_NO,  KC_MUTE,
   //|------+-------+--------+--------+--------+------|      ===  |        |  ===  |--------+-------+--------+--------+--------+---------|
                  _______, _______, _______, _______, _______,              _______,  KC_NO,    KC_MNXT, KC_MPRV, _______
   //            \--------+--------+--------+---------+-------|            |--------+---------+--------+---------+-------/
@@ -106,12 +107,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+-------+--------+--------+--------+------|                             |--------+-------+--------+--------+--------+---------|
   _______,  BP_PIPE, BP_LABK ,BP_SUP,  BP_AMP, BP_COLN,                             KC_P4, RSFT_T(KC_P5), KC_P6, KC_PPLS, KC_PAST, BP_EURO,
   //|------+-------+--------+--------+--------+------|  ===  |             |  ===  |--------+-------+--------+--------+--------+---------|
-  BP_CPERC ,BP_BSLS, BP_LCBR, BP_RCBR, BP_LBRC,BP_RBRC,_______,             RGB_TOG, KC_P1,  KC_P2,  KC_P3,   KC_BSPC, KC_INS,   BP_POUND,
+  BP_CPERC ,BP_BSLS, BP_LCBR, BP_RCBR, BP_LBRC,BP_RBRC,_______,             KC_NO, KC_P1,  KC_P2,  KC_P3,   KC_BSPC, KC_INS,   BP_POUND,
   //|------+-------+--------+--------+--------+------|  ===  |             |  ===  |--------+-------+--------+--------+--------+---------|
                  _______, _______, _______, BP_GRV, BP_UNDS,                _______, _______, KC_P0,  KC_PDOT, _______
   //            \--------+--------+--------+---------+-------|             |--------+---------+--------+---------+-------/
 ),
 };
+
+bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case RSFT_T(BP_T):
+        case RCTL_T(BP_S):
+        case RSFT_T(KC_P5):
+            return true;
+        default:
+            return false;
+    }
+}
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case TT(_RED):
+        case TT(_BLUE):
+            return 150;
+        default:
+            return TAPPING_TERM;
+    }
+}
 
 // for right rotary encoder on layer LOWER
 bool IS_UP_DOWN = 0;

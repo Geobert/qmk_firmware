@@ -66,7 +66,7 @@ enum custom_keycodes {
 
 //
 // For graphical layout visualisation see:
-// http://www.keyboard-layout-editor.com/#/gists/d944d2f559bbeb5de92b941b30687559
+// http://www.keyboard-layout-editor.com/#/gists/15668eb6e9af901b5198c81a2ae73d37
 //
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -92,7 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+-------+--------+--------+--------+------|                            |--------+-------+--------+--------+--------+---------|
   _______,   UNDO,   KC_LALT, KC_RCTRL, KC_LSFT, TLG,                              KC_BSPC,  KC_LEFT, KC_DOWN, KC_RGHT, KC_LGUI, KC_PSCR,
   //|------+-------+--------+--------+--------+------      |  ===  |      |  ===  |--------+-------+--------+--------+--------+---------|
-    KC_NO,    REDO,    CUT,     COPY,   PASTE, DSCRD,   _______,          CUR_TGL, KEEPASS, KC_HOME,  KC_NO, KC_END,  KC_CAPS,  KC_MUTE,
+    KC_CAPS,    REDO,    CUT,     COPY,   PASTE, DSCRD,   _______,          CUR_TGL, KEEPASS, KC_HOME,  KC_NO, KC_END,  KC_NO,  KC_MUTE,
   //|------+-------+--------+--------+--------+------|      ===  |        |  ===  |--------+-------+--------+--------+--------+---------|
                  _______, _______, _______, _______, _______,              _______,  KC_NO,    KC_MNXT, KC_MPRV, _______
   //            \--------+--------+--------+---------+-------|            |--------+---------+--------+---------+-------/
@@ -102,7 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,------------------------------------------------.                              ,---------------------------------------------------.
   _______, KC_F1,  KC_F2,   KC_F3,   KC_F4,   KC_F5,                                 KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,
   //|------+-------+--------+--------+--------+------|                             |--------+-------+--------+--------+--------+---------|
-  _______,  BP_SHARP,BP_DOL, BP_LPRN, BP_RPRN, BP_EQL,                                KC_P7,  KC_P8,  KC_P9,  KC_PMNS,  KC_PSLS, KC_F12,
+  _______,  BP_DOL,BP_SHARP, BP_LPRN, BP_RPRN, BP_EQL,                                KC_P7,  KC_P8,  KC_P9,  KC_PMNS,  KC_PSLS, KC_F12,
   //|------+-------+--------+--------+--------+------|                             |--------+-------+--------+--------+--------+---------|
   _______,  BP_PIPE, BP_LABK ,BP_SUP,  BP_AMP, BP_COLN,                             KC_P4, RSFT_T(KC_P5), KC_P6, KC_PPLS, KC_PAST, BP_EURO,
   //|------+-------+--------+--------+--------+------|  ===  |             |  ===  |--------+-------+--------+--------+--------+---------|
@@ -112,6 +112,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //            \--------+--------+--------+---------+-------|             |--------+---------+--------+---------+-------/
 ),
 };
+
+bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case RSFT_T(BP_T):
+        case RCTL_T(BP_S):
+        case RSFT_T(KC_P5):
+            return true;
+        default:
+            return false;
+    }
+}
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case TT(_RED):
+        case TT(_BLUE):
+            return 150;
+        default:
+            return TAPPING_TERM;
+    }
+}
 
 // for right rotary encoder on layer LOWER
 bool IS_UP_DOWN = 0;

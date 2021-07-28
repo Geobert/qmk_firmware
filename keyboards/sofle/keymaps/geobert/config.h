@@ -13,7 +13,7 @@
   * You should have received a copy of the GNU General Public License
   * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-  #pragma once
+#pragma once
 
 
 //#define USE_MATRIX_I2C
@@ -31,14 +31,17 @@
 
 #define CUSTOM_LAYER_READ //if you remove this it causes issues - needs better guarding
 
-#define TAPPING_FORCE_HOLD
+// #define TAPPING_FORCE_HOLD
+#define TAPPING_FORCE_HOLD_PER_KEY
 #define IGNORE_MOD_TAP_INTERRUPT
 #define RETRO_TAPPING
 
 #ifdef TAPPING_TERM
     #undef TAPPING_TERM
-    #define TAPPING_TERM 200
 #endif
+#define TAPPING_TERM 230
+#define TAPPING_TERM_PER_KEY
+#define TAPPING_TOGGLE 2
 
 #define ENCODER_DIRECTION_FLIP
 #ifdef ENCODER_RESOLUTION
@@ -46,4 +49,4 @@
 #endif
 #define ENCODER_RESOLUTIONS {4, 3}
 
-#define TAPPING_TOGGLE 1
+
