@@ -61,7 +61,8 @@ enum custom_keycodes {
     BP_DOL,
     BP_SUP,
     BP_AMP,
-    BP_NAVTAB
+    BP_NAVTAB,
+    BP_ARRO
 };
 
 //
@@ -104,7 +105,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+-------+--------+--------+--------+------|                             |--------+-------+--------+--------+--------+---------|
   _______,  BP_DOL,BP_SHARP, BP_LPRN, BP_RPRN, BP_EQL,                                KC_P7,  KC_P8,  KC_P9,  KC_PMNS,  KC_PSLS, KC_F12,
   //|------+-------+--------+--------+--------+------|                             |--------+-------+--------+--------+--------+---------|
-  _______,  BP_PIPE, BP_LABK ,BP_SUP,  BP_AMP, BP_COLN,                             KC_P4, RSFT_T(KC_P5), KC_P6, KC_PPLS, KC_PAST, BP_EURO,
+  _______,  BP_PIPE, BP_LABK ,BP_SUP,  BP_AMP, BP_ARRO,                             KC_P4, RSFT_T(KC_P5), KC_P6, KC_PPLS, KC_PAST, BP_EURO,
   //|------+-------+--------+--------+--------+------|  ===  |             |  ===  |--------+-------+--------+--------+--------+---------|
   BP_CPERC ,BP_BSLS, BP_LCBR, BP_RCBR, BP_LBRC,BP_RBRC,_______,             LAUNCH, KC_P1,  KC_P2,  KC_P3,   KC_BSPC, KC_INS,   BP_POUND,
   //|------+-------+--------+--------+--------+------|  ===  |             |  ===  |--------+-------+--------+--------+--------+---------|
@@ -230,6 +231,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code16(KC_TAB);
             }
             break;
+        case BP_ARRO:
+            if (record->event.pressed) {
+                uint8_t temp_mods = get_mods();  //store held mods
+                clear_mods();
+                if (temp_mods & MOD_MASK_SHIFT) {
+                    tap_code16(BP_EQL);
+                } else {
+                    tap_code16(BP_MINS);
+                }
+                tap_code16(BP_RABK);
+                set_mods(temp_mods);
+            }
+            break;
     }
     return true;
 }
@@ -331,6 +345,140 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 
 #ifdef OLED_DRIVER_ENABLE
 
+void render_mod_status_caps_alt(uint8_t modifiers) {
+    static const char PROGMEM caps_off_1[] = {0x85, 0x86, 0};
+    static const char PROGMEM caps_off_2[] = {0xa5, 0xa6, 0};
+    static const char PROGMEM caps_on_1[] = {0x8d, 0x8e, 0};
+    static const char PROGMEM caps_on_2[] = {0xad, 0xae, 0};
+
+    static const char PROGMEM alt_off_1[] = {0x87, 0x88, 0};
+    static const char PROGMEM alt_off_2[] = {0xa7, 0xa8, 0};
+    static const char PROGMEM alt_on_1[] = {0x8f, 0x90, 0};
+    static const char PROGMEM alt_on_2[] = {0xaf, 0xb0, 0};
+
+    // fillers between the modifier icons bleed into the icon frames
+    static const char PROGMEM off_off_1[] = {0xc5, 0};
+    static const char PROGMEM off_off_2[] = {0xc6, 0};
+    static const char PROGMEM on_off_1[] = {0xc7, 0};
+    static const char PROGMEM on_off_2[] = {0xc8, 0};
+    static const char PROGMEM off_on_1[] = {0xc9, 0};
+    static const char PROGMEM off_on_2[] = {0xca, 0};
+    static const char PROGMEM on_on_1[] = {0xcb, 0};
+    static const char PROGMEM on_on_2[] = {0xcc, 0};
+
+    led_t led_usb_state = host_keyboard_led_state();
+    // oled_write_ln_P(PSTR("CPSLK"), led_usb_state.caps_lock);
+    if(led_usb_state.caps_lock) {
+        oled_write_P(caps_on_1, false);
+    } else {
+        oled_write_P(caps_off_1, false);
+    }
+
+    if ((led_usb_state.caps_lock) && (modifiers & MOD_MASK_ALT)) {
+        oled_write_P(on_on_1, false);
+    } else if(led_usb_state.caps_lock) {
+        oled_write_P(on_off_1, false);
+    } else if(modifiers & MOD_MASK_ALT) {
+        oled_write_P(off_on_1, false);
+    } else {
+        oled_write_P(off_off_1, false);
+    }
+
+    if(modifiers & MOD_MASK_ALT) {
+        oled_write_P(alt_on_1, false);
+    } else {
+        oled_write_P(alt_off_1, false);
+    }
+
+    if(led_usb_state.caps_lock) {
+        oled_write_P(caps_on_2, false);
+    } else {
+        oled_write_P(caps_off_2, false);
+    }
+
+    if (led_usb_state.caps_lock && (modifiers & MOD_MASK_ALT)) {
+        oled_write_P(on_on_2, false);
+    } else if(led_usb_state.caps_lock) {
+        oled_write_P(on_off_2, false);
+    } else if(modifiers & MOD_MASK_ALT) {
+        oled_write_P(off_on_2, false);
+    } else {
+        oled_write_P(off_off_2, false);
+    }
+
+    if(modifiers & MOD_MASK_ALT) {
+        oled_write_P(alt_on_2, false);
+    } else {
+        oled_write_P(alt_off_2, false);
+    }
+}
+
+void render_mod_status_ctrl_shift(uint8_t modifiers) {
+    static const char PROGMEM ctrl_off_1[] = {0x89, 0x8a, 0};
+    static const char PROGMEM ctrl_off_2[] = {0xa9, 0xaa, 0};
+    static const char PROGMEM ctrl_on_1[] = {0x91, 0x92, 0};
+    static const char PROGMEM ctrl_on_2[] = {0xb1, 0xb2, 0};
+
+    static const char PROGMEM shift_off_1[] = {0x8b, 0x8c, 0};
+    static const char PROGMEM shift_off_2[] = {0xab, 0xac, 0};
+    static const char PROGMEM shift_on_1[] = {0xcd, 0xce, 0};
+    static const char PROGMEM shift_on_2[] = {0xcf, 0xd0, 0};
+
+    // fillers between the modifier icons bleed into the icon frames
+    static const char PROGMEM off_off_1[] = {0xc5, 0};
+    static const char PROGMEM off_off_2[] = {0xc6, 0};
+    static const char PROGMEM on_off_1[] = {0xc7, 0};
+    static const char PROGMEM on_off_2[] = {0xc8, 0};
+    static const char PROGMEM off_on_1[] = {0xc9, 0};
+    static const char PROGMEM off_on_2[] = {0xca, 0};
+    static const char PROGMEM on_on_1[] = {0xcb, 0};
+    static const char PROGMEM on_on_2[] = {0xcc, 0};
+
+    if(modifiers & MOD_MASK_CTRL) {
+        oled_write_P(ctrl_on_1, false);
+    } else {
+        oled_write_P(ctrl_off_1, false);
+    }
+
+    if ((modifiers & MOD_MASK_CTRL) && (modifiers & MOD_MASK_SHIFT)) {
+        oled_write_P(on_on_1, false);
+    } else if(modifiers & MOD_MASK_CTRL) {
+        oled_write_P(on_off_1, false);
+    } else if(modifiers & MOD_MASK_SHIFT) {
+        oled_write_P(off_on_1, false);
+    } else {
+        oled_write_P(off_off_1, false);
+    }
+
+    if(modifiers & MOD_MASK_SHIFT) {
+        oled_write_P(shift_on_1, false);
+    } else {
+        oled_write_P(shift_off_1, false);
+    }
+
+    if(modifiers & MOD_MASK_CTRL) {
+        oled_write_P(ctrl_on_2, false);
+    } else {
+        oled_write_P(ctrl_off_2, false);
+    }
+
+    if (modifiers & MOD_MASK_CTRL & MOD_MASK_SHIFT) {
+        oled_write_P(on_on_2, false);
+    } else if(modifiers & MOD_MASK_CTRL) {
+        oled_write_P(on_off_2, false);
+    } else if(modifiers & MOD_MASK_SHIFT) {
+        oled_write_P(off_on_2, false);
+    } else {
+        oled_write_P(off_off_2, false);
+    }
+
+    if(modifiers & MOD_MASK_SHIFT) {
+        oled_write_P(shift_on_2, false);
+    } else {
+        oled_write_P(shift_off_2, false);
+    }
+}
+
 static void print_status_narrow(void) {
     // Print current layer
     oled_write_P(PSTR("\n\n"), false);
@@ -350,8 +498,8 @@ static void print_status_narrow(void) {
     }
 
     oled_write_P(PSTR("\n\n"), false);
-    led_t led_usb_state = host_keyboard_led_state();
-    oled_write_ln_P(PSTR("CPSLK"), led_usb_state.caps_lock);
+    render_mod_status_caps_alt(get_mods()|get_oneshot_mods());
+    render_mod_status_ctrl_shift(get_mods()|get_oneshot_mods());
 }
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {

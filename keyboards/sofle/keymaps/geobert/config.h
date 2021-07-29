@@ -15,7 +15,7 @@
 */
 #pragma once
 
-
+#define OLED_FONT_H "keyboards/sofle/keymaps/geobert/glcdfont.c"
 //#define USE_MATRIX_I2C
 
 /* Select hand configuration */

@@ -49,4 +49,3 @@
 #endif
 #define ENCODER_RESOLUTIONS {4, 3}
 
-#define TAPPING_TOGGLE 1
