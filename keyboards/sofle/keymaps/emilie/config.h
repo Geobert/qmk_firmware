@@ -13,8 +13,9 @@
   * You should have received a copy of the GNU General Public License
   * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-  #pragma once
+#pragma once
 
+#define OLED_FONT_H "keyboards/sofle/keymaps/emilie/glcdfont.c"
 
 //#define USE_MATRIX_I2C
 
