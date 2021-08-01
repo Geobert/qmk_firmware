@@ -93,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+-------+--------+--------+--------+------|                            |--------+-------+--------+--------+--------+---------|
   _______,   UNDO,   KC_LALT, KC_RCTRL, KC_LSFT, TLG,                              KC_BSPC,  KC_LEFT, KC_DOWN, KC_RGHT, KC_LGUI, KC_PSCR,
   //|------+-------+--------+--------+--------+------      |  ===  |      |  ===  |--------+-------+--------+--------+--------+---------|
-    KC_CAPS,    REDO,    CUT,     COPY,   PASTE, DSCRD,   _______,          CUR_TGL, KEEPASS, KC_HOME,  KC_NO, KC_END,  KC_NO,  KC_MUTE,
+    KC_CAPS,    REDO,    CUT,     COPY,   PASTE, DSCRD,   _______,          CUR_TGL, KEEPASS, KC_HOME,  KC_NO, KC_END,  BP_F,  KC_MUTE,
   //|------+-------+--------+--------+--------+------|      ===  |        |  ===  |--------+-------+--------+--------+--------+---------|
                  _______, _______, _______, _______, _______,              _______,  KC_NO,    KC_MNXT, KC_MPRV, _______
   //            \--------+--------+--------+---------+-------|            |--------+---------+--------+---------+-------/
@@ -105,7 +105,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+-------+--------+--------+--------+------|                             |--------+-------+--------+--------+--------+---------|
   _______,  BP_DOL,BP_SHARP, BP_LPRN, BP_RPRN, BP_EQL,                                KC_P7,  KC_P8,  KC_P9,  KC_PMNS,  KC_PSLS, KC_F12,
   //|------+-------+--------+--------+--------+------|                             |--------+-------+--------+--------+--------+---------|
-  _______,  BP_PIPE, BP_LABK ,BP_SUP,  BP_AMP, BP_ARRO,                             KC_P4, RSFT_T(KC_P5), KC_P6, KC_PPLS, KC_PAST, BP_EURO,
+  _______,  BP_PIPE, BP_LABK ,BP_SUP,  BP_AMP, BP_ARRO,                          KC_P4, RSFT_T(KC_P5), RCTL_T(KC_P6), KC_PPLS, KC_PAST, BP_EURO,
   //|------+-------+--------+--------+--------+------|  ===  |             |  ===  |--------+-------+--------+--------+--------+---------|
   BP_CPERC ,BP_BSLS, BP_LCBR, BP_RCBR, BP_LBRC,BP_RBRC,_______,             LAUNCH, KC_P1,  KC_P2,  KC_P3,   KC_BSPC, KC_INS,   BP_POUND,
   //|------+-------+--------+--------+--------+------|  ===  |             |  ===  |--------+-------+--------+--------+--------+---------|
@@ -119,6 +119,7 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
         case RSFT_T(BP_T):
         case RCTL_T(BP_S):
         case RSFT_T(KC_P5):
+        case RCTL_T(KC_P6):
             return true;
         default:
             return false;
@@ -185,40 +186,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case BP_DOL:
             if (record->event.pressed) {
                 uint8_t cur_mods = get_mods();
+                clear_mods();
                 if (cur_mods & MOD_MASK_SHIFT) {
                     register_mods(mod_config(MOD_RALT | MOD_LSFT));
+                } else if (cur_mods & MOD_MASK_CTRL) {
+                    register_mods(mod_config(MOD_RALT));
                 }
                 tap_code16(BP_DLR);
-                if (cur_mods & MOD_MASK_SHIFT) {
-                    unregister_mods(mod_config(MOD_RALT | MOD_LSFT));
-                }
+                clear_mods();
                 set_mods(cur_mods);
             }
             break;
         case BP_SUP:
             if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    uint8_t temp_mods = get_mods();  //store held mods
-                    unregister_mods(MOD_MASK_SHIFT);
-                    tap_code16(BP_EQL);
-                    tap_code16(BP_RABK);
-                    set_mods(temp_mods);             //reset SHIFT
-                } else {
-                    tap_code16(BP_RABK);
-                }
+                tap_code16(BP_RABK);
             }
             break;
         case BP_AMP:
             if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    uint8_t temp_mods = get_mods();  //store held mods
-                    unregister_mods(MOD_MASK_SHIFT);
-                    tap_code16(BP_MINS);
-                    tap_code16(BP_RABK);
-                    set_mods(temp_mods);             //reset SHIFT
-                } else {
-                    tap_code16(BP_AMPR);
-                }
+                tap_code16(BP_AMPR);
             }
             break;
         case BP_NAVTAB:
@@ -667,10 +653,11 @@ void oled_task_user(void) {
     if (is_keyboard_master()) {
         print_status_narrow();
     } else {
+        oled_write_P(PSTR("\n"), false);
         render_anim();
         oled_set_cursor(0,12);
-        sprintf(wpm_str, "WPM\n%03d", get_current_wpm());
-        oled_write(wpm_str, false);
+        // sprintf(wpm_str, "WPM\n%03d", get_current_wpm());
+        // oled_write(wpm_str, false);
     }
 }
 
