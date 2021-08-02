@@ -56,9 +56,9 @@ enum sofle_layers {
 
 enum custom_keycodes {
     CUR_TGL = SAFE_RANGE,
-    BP_CPERC,
+    // BP_CPERC,
     BP_SHARP,
-    BP_DOL,
+    // BP_DOL,
     BP_SUP,
     BP_AMP,
     BP_NAVTAB,
@@ -73,13 +73,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_BEPO] = LAYOUT(
   //,------------------------------------------------.                    ,---------------------------------------------------.
-  KC_ESC,   BP_DQUO, BP_LDAQ, BP_RDAQ, BP_LPRN, BP_RPRN,                   BP_AT,  BP_PLUS, BP_MINS, BP_SLSH, BP_ASTR,  BP_EQL ,
+    KC_ESC, BP_DQUO, BP_LDAQ, BP_RDAQ, BP_LPRN, BP_RPRN,                   BP_AT,  BP_PLUS, BP_MINS, BP_SLSH, BP_ASTR,  BP_W ,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-  KC_TAB,    BP_B,   BP_EACU,  BP_P,   BP_O,   BP_EGRV,                   BP_DCIR,  BP_V,   BP_D,    BP_L,    BP_J,    BP_Z,
+    KC_TAB, BP_B,   BP_EACU,  BP_P,   BP_O,   BP_EGRV,                    BP_DCIR,  BP_V,   BP_D,    BP_L,    BP_J,    BP_Z,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-  KC_LSFT,   BP_A,   BP_U,    BP_I,    BP_E,   BP_COMM,                   BP_C, RSFT_T(BP_T), RCTL_T(BP_S), BP_R, BP_N, BP_M,
+     KC_LSFT, BP_A,   BP_U,    BP_I,    BP_E,   BP_COMM,                   BP_C, RSFT_T(BP_T), RCTL_T(BP_S), BP_R, BP_N, BP_M,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-     BP_CCED , BP_AGRV, BP_Y,    BP_X,    BP_DOT,  BP_K,  KC_MPLY,  LAUNCH,  BP_QUOT, BP_Q,   BP_G,    BP_H,    BP_F,   BP_W ,
+     BP_ECIR, BP_AGRV, BP_Y,    BP_X,  BP_DOT,  BP_K,  KC_MPLY,  LAUNCH,  BP_QUOT, BP_Q,   BP_G,    BP_H,    BP_F,   BP_CCED ,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
                  KC_DEL, KC_LALT, KC_LCTL, TT(_RED), KC_SPC,     KC_ENT, TT(_BLUE), KC_RALT, KC_BSPC, KC_RSFT
   //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
@@ -103,11 +103,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,------------------------------------------------.                              ,---------------------------------------------------.
   _______, KC_F1,  KC_F2,   KC_F3,   KC_F4,   KC_F5,                                 KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,
   //|------+-------+--------+--------+--------+------|                             |--------+-------+--------+--------+--------+---------|
-  _______,  BP_DOL,BP_SHARP, BP_LPRN, BP_RPRN, BP_EQL,                                KC_P7,  KC_P8,  KC_P9,  KC_PMNS,  KC_PSLS, KC_F12,
+  _______,  BP_DLR, BP_SHARP, BP_LPRN, BP_RPRN, BP_EQL,                                KC_P7,  KC_P8,  KC_P9,  KC_PMNS,  KC_PSLS, KC_F12,
   //|------+-------+--------+--------+--------+------|                             |--------+-------+--------+--------+--------+---------|
-  _______,  BP_PIPE, BP_LABK ,BP_SUP,  BP_AMP, BP_ARRO,                          KC_P4, RSFT_T(KC_P5), RCTL_T(KC_P6), KC_PPLS, KC_PAST, BP_EURO,
+  _______,  BP_PIPE, BP_LABK ,BP_SUP,  BP_AMP, BP_ARRO,                           KC_P4, RSFT_T(KC_P5), ALGR_T(KC_P6), KC_PPLS, KC_PAST, BP_EURO,
   //|------+-------+--------+--------+--------+------|  ===  |             |  ===  |--------+-------+--------+--------+--------+---------|
-  BP_CPERC ,BP_BSLS, BP_LCBR, BP_RCBR, BP_LBRC,BP_RBRC,_______,             LAUNCH, KC_P1,  KC_P2,  KC_P3,   KC_BSPC, KC_INS,   BP_POUND,
+  BP_PERC ,BP_BSLS, BP_LCBR, BP_RCBR, BP_LBRC,BP_RBRC,_______,             LAUNCH, KC_P1,  KC_P2,  KC_P3,   KC_BSPC, KC_INS,   BP_POUND,
   //|------+-------+--------+--------+--------+------|  ===  |             |  ===  |--------+-------+--------+--------+--------+---------|
                  _______, _______, _______, BP_GRV, BP_UNDS,                _______, _______, KC_P0,  KC_PDOT, _______
   //            \--------+--------+--------+---------+-------|             |--------+---------+--------+---------+-------/
@@ -153,19 +153,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
-        case BP_CPERC:
-            if (record->event.pressed) {
-                uint8_t cur_mods = get_mods();
-                if (cur_mods & MOD_MASK_SHIFT) {
-                    register_mods(mod_config(MOD_RALT));
-                }
-                tap_code16(BP_PERC);
-                if (cur_mods & MOD_MASK_SHIFT) {
-                    unregister_mods(mod_config(MOD_RALT));
-                }
-                set_mods(cur_mods);
-            }
-            break;
+        // case BP_CPERC:
+        //     if (record->event.pressed) {
+        //         uint8_t cur_mods = get_mods();
+        //         if (cur_mods & MOD_MASK_SHIFT) {
+        //             register_mods(mod_config(MOD_RALT));
+        //         }
+        //         tap_code16(BP_PERC);
+        //         if (cur_mods & MOD_MASK_SHIFT) {
+        //             unregister_mods(mod_config(MOD_RALT));
+        //         }
+        //         set_mods(cur_mods);
+        //     }
+        //     break;
         case BP_SHARP:
             if (record->event.pressed) {
                 uint8_t cur_mods = get_mods();
@@ -183,20 +183,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 set_mods(cur_mods);
             }
             break;
-        case BP_DOL:
-            if (record->event.pressed) {
-                uint8_t cur_mods = get_mods();
-                clear_mods();
-                if (cur_mods & MOD_MASK_SHIFT) {
-                    register_mods(mod_config(MOD_RALT | MOD_LSFT));
-                } else if (cur_mods & MOD_MASK_CTRL) {
-                    register_mods(mod_config(MOD_RALT));
-                }
-                tap_code16(BP_DLR);
-                clear_mods();
-                set_mods(cur_mods);
-            }
-            break;
+        // case BP_DOL:
+        //     if (record->event.pressed) {
+        //         uint8_t cur_mods = get_mods();
+        //         clear_mods();
+        //         if (cur_mods & MOD_MASK_SHIFT) {
+        //             register_mods(mod_config(MOD_RALT | MOD_LSFT));
+        //         } else if (cur_mods & MOD_MASK_CTRL) {
+        //             register_mods(mod_config(MOD_RALT));
+        //         }
+        //         tap_code16(BP_DLR);
+        //         clear_mods();
+        //         set_mods(cur_mods);
+        //     }
+        //     break;
         case BP_SUP:
             if (record->event.pressed) {
                 tap_code16(BP_RABK);
