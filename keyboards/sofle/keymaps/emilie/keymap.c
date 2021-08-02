@@ -119,6 +119,7 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
         case RSFT_T(BP_T):
         case RCTL_T(BP_S):
         case RSFT_T(KC_P5):
+        case ALGR_T(KC_P6):
             return true;
         default:
             return false;
