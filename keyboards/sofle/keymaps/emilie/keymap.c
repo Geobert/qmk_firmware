@@ -56,9 +56,9 @@ enum sofle_layers {
 };
 
 enum custom_keycodes {
-    CUR_TGL = SAFE_RANGE,
+    // CUR_TGL = SAFE_RANGE,
     // BP_CPERC,
-    BP_SHARP,
+    BP_SHARP = SAFE_RANGE,
     // BP_DOL,
     BP_SUP,
     BP_AMP,
@@ -79,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
   KC_LSFT,   BP_A,   BP_U,    BP_I,    BP_E,   BP_COMM,                   BP_C, RSFT_T(BP_T), RCTL_T(BP_S), BP_R, BP_N, BP_M,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-     BP_ECIR, BP_AGRV, BP_Y, BP_X,   BP_DOT,  BP_K,  KC_MPLY,  DISC_MUTE,  BP_QUOT, BP_Q,   BP_G,    BP_H,    BP_F,   BP_CCED ,
+     BP_EQL, BP_AGRV, BP_Y, BP_X,   BP_DOT,  BP_K,  KC_MPLY,  DISC_MUTE,  BP_QUOT, BP_Q,   BP_G,    BP_H,    BP_F,   BP_CCED ,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
                  KC_DEL, KC_LALT, KC_LCTL, TT(_RED), KC_SPC,     KC_ENT, TT(_BLUE), KC_RALT, KC_BSPC, KC_RSFT
   //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
@@ -93,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+-------+--------+--------+--------+------|                            |--------+-------+--------+--------+--------+---------|
   _______,   UNDO,   KC_LALT, KC_RCTRL, KC_LSFT, TLG,                              KC_BSPC,  KC_LEFT, KC_DOWN, KC_RGHT, KC_LGUI, KC_PSCR,
   //|------+-------+--------+--------+--------+------      |  ===  |      |  ===  |--------+-------+--------+--------+--------+---------|
-    KC_CAPS,  REDO,    CUT,     COPY,   PASTE, DSCRD,   _______,          CUR_TGL, KEEPASS, KC_HOME,  KC_NO, KC_END,  KC_NO,  KC_MUTE,
+    KC_CAPS,  REDO,    CUT,     COPY,   PASTE, DSCRD,   _______,          KC_MUTE, KEEPASS, KC_HOME,  KC_NO, KC_END,  KC_NO,  KC_MUTE,
   //|------+-------+--------+--------+--------+------|      ===  |        |  ===  |--------+-------+--------+--------+--------+---------|
                  _______, _______, _______, _______, _______,              _______,  KC_NO,    KC_MNXT, KC_MPRV, _______
   //            \--------+--------+--------+---------+-------|            |--------+---------+--------+---------+-------/
@@ -136,34 +136,19 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-// for right rotary encoder on layer LOWER
-bool IS_UP_DOWN = 0;
 bool is_nav_tab_active = false;
 uint16_t nav_tab_timer = 0;
 #define NAV_TAB_TIMEOUT 800
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case CUR_TGL:
-            if (record->event.pressed) {
-                if (IS_UP_DOWN == 0) {
-                    IS_UP_DOWN = 1;
-                } else {
-                    IS_UP_DOWN = 0;
-                }
-            }
-            break;
-        // case :
+        // case CUR_TGL:
         //     if (record->event.pressed) {
-        //         uint8_t cur_mods = get_mods();
-        //         if (cur_mods & MOD_MASK_SHIFT) {
-        //             register_mods(mod_config(MOD_RALT));
+        //         if (IS_UP_DOWN == 0) {
+        //             IS_UP_DOWN = 1;
+        //         } else {
+        //             IS_UP_DOWN = 0;
         //         }
-        //         tap_code16(BP_PERC);
-        //         if (cur_mods & MOD_MASK_SHIFT) {
-        //             unregister_mods(mod_config(MOD_RALT));
-        //         }
-        //         set_mods(cur_mods);
         //     }
         //     break;
         case BP_SHARP:
@@ -183,19 +168,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 set_mods(cur_mods);
             }
             break;
-        // case BP_DOL:
-        //     if (record->event.pressed) {
-        //         uint8_t cur_mods = get_mods();
-        //         if (cur_mods & MOD_MASK_SHIFT) {
-        //             register_mods(mod_config(MOD_RALT | MOD_LSFT));
-        //         }
-        //         tap_code16(BP_DLR);
-        //         if (cur_mods & MOD_MASK_SHIFT) {
-        //             unregister_mods(mod_config(MOD_RALT | MOD_LSFT));
-        //         }
-        //         set_mods(cur_mods);
-        //     }
-        //     break;
         case BP_SUP:
             if (record->event.pressed) {
                 if (get_mods() & MOD_MASK_SHIFT) {
@@ -308,17 +280,9 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 break;
              case _RED:
                 if (clockwise) {
-                    if (IS_UP_DOWN == 1) {
-                        tap_code(KC_UP);
-                    } else {
-                        tap_code16(C(KC_RIGHT));
-                    }
+                    tap_code(KC_VOLU);
                 } else {
-                    if (IS_UP_DOWN == 1) {
-                        tap_code(KC_DOWN);
-                    } else {
-                        tap_code16(C(KC_LEFT));
-                    }
+                    tap_code(KC_VOLD);
                 }
                 break;
             case _BLUE:
@@ -681,10 +645,11 @@ void oled_task_user(void) {
     if (is_keyboard_master()) {
         print_status_narrow();
     } else {
+        oled_write_P(PSTR("\n"), false);
         render_anim();
         oled_set_cursor(0,12);
-        sprintf(wpm_str, "WPM\n%03d", get_current_wpm());
-        oled_write(wpm_str, false);
+        // sprintf(wpm_str, "WPM\n%03d", get_current_wpm());
+        // oled_write(wpm_str, false);
     }
 }
 
