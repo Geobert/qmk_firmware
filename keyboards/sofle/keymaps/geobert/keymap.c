@@ -143,28 +143,6 @@ uint16_t nav_tab_timer = 0;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // case CUR_TGL:
-        //     if (record->event.pressed) {
-        //         if (IS_UP_DOWN == 0) {
-        //             IS_UP_DOWN = 1;
-        //         } else {
-        //             IS_UP_DOWN = 0;
-        //         }
-        //     }
-        //     break;
-        // case BP_CPERC:
-        //     if (record->event.pressed) {
-        //         uint8_t cur_mods = get_mods();
-        //         if (cur_mods & MOD_MASK_SHIFT) {
-        //             register_mods(mod_config(MOD_RALT));
-        //         }
-        //         tap_code16(BP_PERC);
-        //         if (cur_mods & MOD_MASK_SHIFT) {
-        //             unregister_mods(mod_config(MOD_RALT));
-        //         }
-        //         set_mods(cur_mods);
-        //     }
-        //     break;
         case BP_SHARP:
             if (record->event.pressed) {
                 uint8_t cur_mods = get_mods();
@@ -182,25 +160,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 set_mods(cur_mods);
             }
             break;
-        // case BP_DOL:
-        //     if (record->event.pressed) {
-        //         uint8_t cur_mods = get_mods();
-        //         clear_mods();
-        //         if (cur_mods & MOD_MASK_SHIFT) {
-        //             register_mods(mod_config(MOD_RALT | MOD_LSFT));
-        //         } else if (cur_mods & MOD_MASK_CTRL) {
-        //             register_mods(mod_config(MOD_RALT));
-        //         }
-        //         tap_code16(BP_DLR);
-        //         clear_mods();
-        //         set_mods(cur_mods);
-        //     }
-        //     break;
-        // case BP_SUP:
-        //     if (record->event.pressed) {
-        //         tap_code16(BP_RABK);
-        //     }
-        //     break;
         case BP_AMP:
             if (record->event.pressed) {
                 tap_code16(BP_AMPR);
