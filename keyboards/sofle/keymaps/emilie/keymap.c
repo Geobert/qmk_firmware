@@ -51,18 +51,17 @@ char wpm_str[4];
 enum sofle_layers {
     _DEFAULTS = 0,
     _BEPO = 0,
+    _GAME,
     _RED,
     _BLUE
 };
 
 enum custom_keycodes {
-    // CUR_TGL = SAFE_RANGE,
-    // BP_CPERC,
     BP_SHARP = SAFE_RANGE,
-    // BP_DOL,
     BP_SUP,
     BP_AMP,
-    BP_NAVTAB
+    BP_NAVTAB,
+    TGL_GAME,
 };
 
 //
@@ -85,6 +84,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
 ),
 
+[_GAME] = LAYOUT(
+  //,------------------------------------------------.                    ,---------------------------------------------------.
+    KC_ESC, BP_DQUO, BP_LDAQ, BP_RDAQ, BP_LPRN, BP_RPRN,                   BP_AT,  BP_PLUS, BP_MINS, BP_SLSH, BP_ASTR,  BP_W ,
+  //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
+    KC_TAB, BP_B,   BP_EACU,  BP_P,   BP_O,   BP_EGRV,                    BP_DCIR,  BP_V,   BP_D,    BP_L,    BP_J,    BP_Z,
+  //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
+     KC_LSFT, BP_A,   BP_U,    BP_I,    BP_E,   BP_COMM,                   BP_C,    BP_T,     BP_S,  BP_R,     BP_N,   BP_M,
+  //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
+     BP_EQL, BP_AGRV, BP_Y,    BP_X,  BP_DOT,  BP_K,  KC_MPLY,  LAUNCH,  BP_QUOT, BP_Q,   BP_G,    BP_H,    BP_F,   BP_CCED ,
+  //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
+                 KC_DEL, KC_LALT, KC_LCTL, TT(_RED), KC_SPC,     KC_ENT, TT(_BLUE), KC_RALT, KC_BSPC, KC_RSFT
+  //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
+),
+
 [_RED] = LAYOUT(
   //,------------------------------------------------.                             ,---------------------------------------------------.
   _______,  KC_F1,  KC_F2,   KC_F3,   KC_F4,   KC_F5,                              KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,
@@ -95,7 +108,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+-------+--------+--------+--------+------      |  ===  |      |  ===  |--------+-------+--------+--------+--------+---------|
     KC_CAPS,  REDO,    CUT,     COPY,   PASTE, DSCRD,   _______,          KC_MUTE, KEEPASS, KC_HOME,  KC_NO, KC_END,  KC_NO,  KC_MUTE,
   //|------+-------+--------+--------+--------+------|      ===  |        |  ===  |--------+-------+--------+--------+--------+---------|
-                 _______, _______, _______, _______, _______,              _______,  KC_NO,    KC_MNXT, KC_MPRV, _______
+                 _______, _______, _______, _______, _______,              _______,  KC_NO,    KC_MNXT, KC_MPRV, TGL_GAME
   //            \--------+--------+--------+---------+-------|            |--------+---------+--------+---------+-------/
 ),
 
@@ -107,7 +120,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+-------+--------+--------+--------+------|                             |--------+-------+--------+--------+--------+---------|
   _______,  BP_PIPE, BP_LABK ,BP_SUP,  BP_AMP, BP_COLN,                             KC_P4, RSFT_T(KC_P5), ALGR_T(KC_P6), KC_PPLS, KC_PAST, BP_EURO,
   //|------+-------+--------+--------+--------+------|  ===  |             |  ===  |--------+-------+--------+--------+--------+---------|
-  BP_PERC ,BP_BSLS, BP_LCBR, BP_RCBR, BP_LBRC,BP_RBRC,_______,             KC_NO, KC_P1,  KC_P2,  KC_P3,   KC_BSPC, KC_INS,   BP_POUND,
+  BP_PERC ,BP_BSLS, BP_LCBR, BP_RCBR, BP_LBRC,BP_RBRC,_______,             DISC_MUTE, KC_P1,  KC_P2,  KC_P3,   KC_BSPC, KC_INS,   BP_POUND,
   //|------+-------+--------+--------+--------+------|  ===  |             |  ===  |--------+-------+--------+--------+--------+---------|
                  _______, _______, _______, BP_GRV, BP_UNDS,                _______, _______, KC_P0,  KC_PDOT, _______
   //            \--------+--------+--------+---------+-------|             |--------+---------+--------+---------+-------/
@@ -139,18 +152,21 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 bool is_nav_tab_active = false;
 uint16_t nav_tab_timer = 0;
 #define NAV_TAB_TIMEOUT 800
+bool is_game = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // case CUR_TGL:
-        //     if (record->event.pressed) {
-        //         if (IS_UP_DOWN == 0) {
-        //             IS_UP_DOWN = 1;
-        //         } else {
-        //             IS_UP_DOWN = 0;
-        //         }
-        //     }
-        //     break;
+        case TGL_GAME:
+            if (record->event.pressed) {
+                if (is_game) {
+                    is_game = false;
+                    default_layer_set(1UL << _BEPO);
+                } else {
+                    is_game = true;
+                    default_layer_set(1UL << _GAME);
+                }
+            }
+            break;
         case BP_SHARP:
             if (record->event.pressed) {
                 uint8_t cur_mods = get_mods();
@@ -272,6 +288,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     } else if (index == 1) {
         switch (get_highest_layer(layer_state)) {
             case _BEPO:
+            case _BLUE:
                 if (clockwise) {
                     tap_code(KC_DEL);
                 } else {
@@ -281,36 +298,11 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
              case _RED:
                 if (clockwise) {
                     tap_code(KC_VOLU);
+                    tap_code(KC_VOLU);
                 } else {
                     tap_code(KC_VOLD);
+                    tap_code(KC_VOLD);
                 }
-                break;
-            case _BLUE:
-            {
-                bool ctrl = get_mods() == MOD_MASK_CTRL;
-                bool alt = get_mods() == MOD_MASK_ALT;
-                if (clockwise) {
-                    if (ctrl && alt) {
-                        tap_code16(RGB_MOD);
-                    } else if (ctrl) {
-                        tap_code16(RGB_VAI);
-                    } else if (alt) {
-                        tap_code16(RGB_SAI);
-                    } else {
-                        tap_code16(RGB_HUI);
-                    }
-                } else {
-                    if (ctrl && alt) {
-                        tap_code16(RGB_RMOD);
-                    } else if (ctrl) {
-                        tap_code16(RGB_VAD);
-                    } else if (alt) {
-                        tap_code16(RGB_SAD);
-                    } else {
-                        tap_code16(RGB_HUD);
-                    }
-                }
-            }
                 break;
         }
     }
