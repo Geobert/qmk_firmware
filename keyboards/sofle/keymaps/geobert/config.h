@@ -39,7 +39,7 @@
 #ifdef TAPPING_TERM
     #undef TAPPING_TERM
 #endif
-#define TAPPING_TERM 230
+#define TAPPING_TERM 190
 #define TAPPING_TERM_PER_KEY
 #define TAPPING_TOGGLE 2
 
@@ -47,6 +47,6 @@
 #ifdef ENCODER_RESOLUTION
     #undef ENCODER_RESOLUTION
 #endif
-#define ENCODER_RESOLUTIONS {4, 2}
+#define ENCODER_RESOLUTIONS {4, 3}
 
 
