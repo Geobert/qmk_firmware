@@ -1,95 +1,10 @@
+#include <stdio.h>
+
 #include QMK_KEYBOARD_H
 
-#ifdef OLED_DRIVER_ENABLE
-#include <stdio.h>
-#endif
-
-#include <keymap_bepo.h>
-
-// move window to left screen
-#define MV_LFT SWIN(KC_LEFT)
-
-// move window to right screen
-#define MV_RGT SWIN(KC_RIGHT)
-
-#define DITTO LWIN(BP_AGRV)
-#define PASSMAN RCS(BP_W)
-#define DEL_LINE RCS(BP_K)
-#define LAUNCH A(KC_SPC)
-#define WD_LFT C(KC_LEFT)
-#define WD_RGT C(KC_RIGHT)
-#define UNDO C(BP_Z)
-#define REDO C(BP_Y)
-#define TLG A(BP_DLR)
-#define DSCRD C(BP_DLR)
-#define CUT C(BP_X)
-#define COPY C(BP_C)
-#define PASTE C(BP_V)
-#define BP_POUND ALGR(BP_L)
-#define SPOTI_FAV LSA(BP_B)
-// #define ALT_T_U ALT_T(BP_U)
-// #define LCTL_T_I LCTL_T(BP_I)
-// #define LSFT_T_E LSFT_T(BP_E)
-#define RSFT_T_T RSFT_T(BP_T)
-#define RCTL_T_S RCTL_T(BP_S)
-#define RCTL_T_R RCTL_T(BP_R)
-#define RSFT_T_P4 RSFT_T(KC_P4)
-#define ALGR_T_P5 ALGR_T(KC_P5)
-
-// LAYERS SECTION
-enum snowslide_layers {
-    _DEFAULTS = 0,
-    _BEPO = 0,
-    _GAME,
-    _RED,
-    _BLUE,
-};
-
-enum custom_keycodes {
-    BP_SHARP = SAFE_RANGE,
-    BP_AMP,
-    // BP_NAVTAB,
-    BP_ARRO,
-    BP_FARRO,
-    TGL_GAME,
-};
 
 
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-
-    [_BEPO] = LAYOUT(
-                 KC_ESC,  BP_DQUO, BP_LDAQ, BP_RDAQ, BP_LPRN, BP_RPRN,                        BP_AT,     BP_PLUS, BP_MINS, BP_SLSH, BP_ASTR, BP_CCED,
-                 KC_TAB,  BP_B,    BP_EACU, BP_P,    BP_O,    BP_EGRV,                        BP_DCIR,   BP_V,    BP_D,    BP_L,    BP_J,    BP_Z,
-        KC_MPLY, KC_LSFT, BP_A,    BP_U,    BP_I,    BP_E,    BP_COMM,   KC_DEL,     KC_BSPC, BP_C,      BP_T,    BP_S,    BP_R,    BP_N,    BP_M,     BP_W,
-                 BP_GRV,  BP_AGRV, BP_Y,    BP_X,    BP_DOT,  BP_K,      KC_BSPC,    KC_DEL,  BP_QUOT,   BP_Q,    BP_G,    BP_H,    BP_F,    BP_EQL,
-                 KC_ENT,                    KC_LALT, KC_LCTL, TT(_RED),  KC_SPC,     KC_ENT,  TT(_BLUE), KC_RALT, KC_RSFT,                   LAUNCH
-    ),
-
-    [_GAME] = LAYOUT(
-                 KC_ESC,  BP_DQUO, BP_LDAQ, BP_RDAQ, BP_LPRN, BP_RPRN,                        BP_AT,     BP_PLUS, BP_MINS, BP_SLSH, BP_ASTR, BP_CCED,
-                 KC_TAB,  BP_B,    BP_EACU, BP_CCED, BP_O,    BP_EGRV,                        BP_DCIR,   BP_V,    BP_D,    BP_L,    BP_J,    BP_Z,
-        KC_MPLY, KC_LSFT, BP_A,    BP_A,    BP_S,    BP_D,    BP_COMM,   KC_DEL,     KC_BSPC, BP_C,      BP_T,    BP_S,    BP_R,    BP_N,    BP_M,     BP_W,
-                 BP_GRV,  BP_AGRV, BP_Y,    BP_X,    BP_DOT,  BP_K,      KC_BSPC,    KC_DEL,  BP_QUOT,   BP_Q,    BP_G,    BP_H,    BP_F,    BP_EQL,
-                 KC_ENT,                    KC_LALT, KC_LCTL, TT(_RED),  KC_SPC,     KC_ENT,  TT(_BLUE), KC_RALT, KC_RSFT,                   LAUNCH
-    ),
-
-    [_RED] = LAYOUT(
-                 _______,  KC_F1,   KC_F2,     KC_F3,     KC_F4,    KC_F5,                             KC_F6,      KC_F7,     KC_F8,   KC_F9,   KC_F10,  KC_F11,
-                 _______,  MV_LFT,  SPOTI_FAV, C(KC_SPC), PASSMAN,  C(KC_PSCR),                        DEL_LINE,   WD_LFT,    KC_UP,   WD_RGT,  KC_APP,  KC_F12,
-        KC_MUTE, _______,  UNDO,    BP_A,      BP_S,      BP_D,     ALGR(KC_TAB), TLG,        KC_BSPC, KC_PGUP,    KC_LEFT,   KC_DOWN, KC_RGHT, KC_NO,   KC_LGUI, KC_PSCR,
-                 KC_CAPS,  REDO,    BP_Y,      BP_X,      BP_DOT,   BP_K,         KC_MNXT,    KC_VOLU, KC_PGDOWN,  KC_HOME,   KC_NO,   KC_END,  BP_F,    KC_NO,
-                 KC_NO,                        _______,   _______,  TT(_RED),     KC_SPC,     KC_ENT,  KC_VOLD,    KC_MPRV,   KC_NO,                     TGL_GAME
-    ),
-
-    [_BLUE] = LAYOUT(
-                 _______,  KC_F1,    KC_F2,     KC_F3,     KC_F4,    KC_F5,                             KC_F6,      KC_F7,     KC_F8,  KC_F9,  KC_F10,  KC_F11,
-                 _______,  KC_NO,    BP_SHARP,  BP_LABK,   BP_RABK,  BP_FARRO,                          KC_PMNS,    KC_P7,     KC_P8,  KC_P9,  KC_PSLS, KC_F12,
-        KC_NO,   _______,  BP_PIPE,  BP_RCBR,   BP_LCBR,   BP_AMP,   BP_ARRO,    KC_ENT,       KC_BSPC, KC_PPLS,    KC_P4,     KC_P5,  KC_P6,  KC_PAST, BP_EURO, KC_INS,
-                 BP_BSLS,  BP_PERC,  BP_DLR,    BP_LBRC,   BP_RBRC,  _______,    KC_DEL,       KC_RALT, KC_PDOT,    KC_P1,     KC_P2,  KC_P3,  BP_DLR,  BP_POUND,
-                 _______,                       _______,   _______,  _______,    BP_UNDS,      KC_ENT,  TT(_BLUE),  KC_P0,     _______,                 _______
-    )
-};
-
+#include "layout.c"
 
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -184,9 +99,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 // OLED screen
 
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
 
-void render_mod_status_caps_alt(uint8_t modifiers) {
+void render_mod_status_caps_alt(uint8_t col, uint8_t line, uint8_t modifiers) {
     static const char PROGMEM caps_off_1[] = {0x85, 0x86, 0};
     static const char PROGMEM caps_off_2[] = {0xa5, 0xa6, 0};
     static const char PROGMEM caps_on_1[] = {0x8d, 0x8e, 0};
@@ -209,6 +124,7 @@ void render_mod_status_caps_alt(uint8_t modifiers) {
 
     led_t led_usb_state = host_keyboard_led_state();
     // oled_write_ln_P(PSTR("CPSLK"), led_usb_state.caps_lock);
+    oled_set_cursor(col, line);
     if(led_usb_state.caps_lock) {
         oled_write_P(caps_on_1, false);
     } else {
@@ -231,6 +147,8 @@ void render_mod_status_caps_alt(uint8_t modifiers) {
         oled_write_P(alt_off_1, false);
     }
 
+
+    oled_set_cursor(col, line + 1);
     if(led_usb_state.caps_lock) {
         oled_write_P(caps_on_2, false);
     } else {
@@ -254,7 +172,7 @@ void render_mod_status_caps_alt(uint8_t modifiers) {
     }
 }
 
-void render_mod_status_ctrl_shift(uint8_t modifiers) {
+void render_mod_status_ctrl_shift(uint8_t col, uint8_t line, uint8_t modifiers) {
     static const char PROGMEM ctrl_off_1[] = {0x89, 0x8a, 0};
     static const char PROGMEM ctrl_off_2[] = {0xa9, 0xaa, 0};
     static const char PROGMEM ctrl_on_1[] = {0x91, 0x92, 0};
@@ -275,6 +193,7 @@ void render_mod_status_ctrl_shift(uint8_t modifiers) {
     static const char PROGMEM on_on_1[] = {0xcb, 0};
     static const char PROGMEM on_on_2[] = {0xcc, 0};
 
+    oled_set_cursor(col, line);
     if(modifiers & MOD_MASK_CTRL) {
         oled_write_P(ctrl_on_1, false);
     } else {
@@ -297,6 +216,7 @@ void render_mod_status_ctrl_shift(uint8_t modifiers) {
         oled_write_P(shift_off_1, false);
     }
 
+    oled_set_cursor(col, line + 1);
     if(modifiers & MOD_MASK_CTRL) {
         oled_write_P(ctrl_on_2, false);
     } else {
@@ -320,60 +240,184 @@ void render_mod_status_ctrl_shift(uint8_t modifiers) {
     }
 }
 
-void render_layer_state(void) {
-    static const char PROGMEM default_layer[] = {
-        0x20, 0x94, 0x95, 0x96, 0x20,
-        0x20, 0xb4, 0xb5, 0xb6, 0x20,
-        0x20, 0xd4, 0xd5, 0xd6, 0x20, 0};
-    static const char PROGMEM raise_layer[] = {
-        0x20, 0x97, 0x98, 0x99, 0x20,
-        0x20, 0xb7, 0xb8, 0xb9, 0x20,
+void print_raise_layer(uint8_t col, uint8_t line) {
+    static const char PROGMEM raise_layer1[] = {
+        0x20, 0x97, 0x98, 0x99, 0x20, 0};
+    static const char PROGMEM raise_layer2[] = {
+        0x20, 0xb7, 0xb8, 0xb9, 0x20, 0};
+    static const char PROGMEM raise_layer3[] = {
         0x20, 0xd7, 0xd8, 0xd9, 0x20, 0};
-    static const char PROGMEM lower_layer[] = {
-        0x20, 0x9a, 0x9b, 0x9c, 0x20,
-        0x20, 0xba, 0xbb, 0xbc, 0x20,
+    oled_write_P(raise_layer1, false);
+    oled_set_cursor(col, line + 1);
+    oled_write_P(raise_layer2, false);
+    oled_set_cursor(col, line + 2);
+    oled_write_P(raise_layer3, false);
+}
+
+void print_lower_layer(uint8_t col, uint8_t line) {
+    static const char PROGMEM lower_layer1[] = {
+        0x20, 0x9a, 0x9b, 0x9c, 0x20, 0};
+    static const char PROGMEM lower_layer2[] = {
+        0x20, 0xba, 0xbb, 0xbc, 0x20, 0};
+    static const char PROGMEM lower_layer3[] = {
         0x20, 0xda, 0xdb, 0xdc, 0x20, 0};
-    // static const char PROGMEM game_layer[] = {
-    //     0x20, 0x9d, 0x9e, 0x9f, 0x20,
-    //     0x20, 0xbd, 0xbe, 0xbf, 0x20,
-    //     0x20, 0xdd, 0xde, 0xdf, 0x20, 0};
-    // if(layer_state_is(_GAME)) {
-    //     oled_write_P(game_layer, false);
-    // } else
+
+    oled_write_P(lower_layer1, false);
+    oled_set_cursor(col, line + 1);
+    oled_write_P(lower_layer2, false);
+    oled_set_cursor(col, line + 2);
+    oled_write_P(lower_layer3, false);
+}
+
+void print_default_layer(uint8_t col, uint8_t line) {
+    static const char PROGMEM default_layer1[] = {
+        0x20, 0x94, 0x95, 0x96, 0x20, 0};
+    static const char PROGMEM default_layer2[] = {
+        0x20, 0xb4, 0xb5, 0xb6, 0x20, 0};
+    static const char PROGMEM default_layer3[] = {
+        0x20, 0xd4, 0xd5, 0xd6, 0x20, 0};
+
+    oled_write_P(default_layer1, false);
+    oled_set_cursor(col, line + 1);
+    oled_write_P(default_layer2, false);
+    oled_set_cursor(col, line + 2);
+    oled_write_P(default_layer3, false);
+}
+
+void render_layer_state(uint8_t col, uint8_t line) {
+    oled_set_cursor(col, line);
+
     if (layer_state_is(_BLUE)) {
-        oled_write_P(lower_layer, false);
+        print_lower_layer(col, line);
     } else if(layer_state_is(_RED)) {
-        oled_write_P(raise_layer, false);
+        print_raise_layer(col, line);
     } else {
-        oled_write_P(default_layer, false);
+        print_default_layer(col, line);
     }
 }
 
-void render_logo(void) {
-    static const char PROGMEM corne_logo[] = {
-        0x80, 0x81, 0x82, 0x83, 0x84,
-        0xa0, 0xa1, 0xa2, 0xa3, 0xa4,
+void render_logo(uint8_t line) {
+    static const char PROGMEM logo1[] = {
+        0x80, 0x81, 0x82, 0x83, 0x84, 0};
+    static const char PROGMEM logo2[] = {
+        0xa0, 0xa1, 0xa2, 0xa3, 0xa4, 0};
+    static const char PROGMEM logo3[] = {
         0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0};
-    oled_write_P(corne_logo, false);
+
+    oled_set_cursor(0, line);
+    oled_write_P(logo1, false);
+    oled_set_cursor(0, line + 1);
+    oled_write_P(logo2, false);
+    oled_set_cursor(0, line + 2);
+    oled_write_P(logo3, false);
+}
+
+void print_base_layer(uint8_t col, uint8_t line) {
+    static const char PROGMEM bepo1[] = {
+        0x01, 0x02, 0x03, 0x04, 0x05, 0
+    };
+    static const char PROGMEM bepo2[] = {
+        0x21, 0x22, 0x23, 0x24, 0x25, 0
+    };
+
+    static const char PROGMEM game1[] = {
+        0x06, 0x07, 0x08, 0x09, 0x14, 0
+    };
+    static const char PROGMEM game2[] = {
+        0x26, 0x27, 0x28, 0x29, 0x2A, 0
+    };
+
+
+    oled_set_cursor(col, line);
+    switch (get_highest_layer(default_layer_state)) {
+        case _BEPO:
+            // oled_write_P(PSTR("Bepo"), false);
+            oled_write_P(bepo1, false);
+            oled_set_cursor(col, line + 1);
+            oled_write_P(bepo2, false);
+            break;
+        case _GAME:
+            oled_write_P(game1, false);
+            oled_set_cursor(col, line + 1);
+            oled_write_P(game2, false);
+            // oled_write_P(PSTR("Game"), false);
+            break;
+        default:
+            oled_write_P(PSTR("Undef"), false);
+    }
 }
 
 static void print_status_narrow(void) {
-    render_logo();
-    oled_write_P(PSTR("\n"), false);
-    render_layer_state();
-    oled_write_P(PSTR("\n"), false);
-    render_mod_status_caps_alt(get_mods()|get_oneshot_mods());
-    render_mod_status_ctrl_shift(get_mods()|get_oneshot_mods());
+    render_logo(0);
+    render_layer_state(5, 0);
 
-    switch (get_highest_layer(default_layer_state)) {
-        case _BEPO:
-            oled_write_ln_P(PSTR("\nBepo"), false);
-            break;
-        case _GAME:
-            oled_write_ln_P(PSTR("\nGame"), false);
-            break;
-        default:
-            oled_write_ln_P(PSTR("\nUndef"), false);
+    const uint8_t col = 10;
+    render_mod_status_caps_alt(col, 0, get_mods()|get_oneshot_mods());
+    render_mod_status_ctrl_shift(col, 2, get_mods()|get_oneshot_mods());
+
+    oled_set_cursor(16, 2);
+    print_base_layer(16, 1);
+    oled_render();
+}
+
+// WPM-responsive animation stuff here
+
+#include "../bongocat.h"
+#define IDLE_SPEED 30 // below this wpm value your animation will idle
+
+// #define PREP_FRAMES 1 // uncomment if >1
+
+#define TAP_SPEED 45 // above this wpm value typing animation to triggere
+
+#define ANIM_FRAME_DURATION 200 // how long each frame lasts in ms
+// #define SLEEP_TIMER 60000 // should sleep after this period of 0 wpm, needs fixing
+
+uint32_t anim_timer = 0;
+uint32_t anim_sleep = 0;
+uint8_t current_idle_frame = 0;
+// uint8_t current_prep_frame = 0; // uncomment if PREP_FRAMES >1
+uint8_t current_tap_frame = 0;
+
+// Implementation credit j-inc(/James Incandenza), pixelbenny, and obosob.
+// Bongo cat images changed and adapted for sofle keyboard oled size.
+// Original gif can be found here: https://www.pixilart.com/art/bongo-cat-bd2a8e9323aa705
+static void render_anim(void) {
+    //assumes 1 frame prep stage
+    void animation_phase(void) {
+        if(get_current_wpm() <=IDLE_SPEED){
+            /*
+            current_idle_frame = (current_idle_frame + 1) % IDLE_FRAMES;
+            oled_write_raw_P(idle[abs((IDLE_FRAMES-1)-current_idle_frame)], ANIM_SIZE);
+            */
+            oled_write_raw_P(idle[0], ANIM_SIZE);
+         }
+         /*
+         if(get_current_wpm() >IDLE_SPEED && get_current_wpm() <TAP_SPEED){
+             // oled_write_raw_P(prep[abs((PREP_FRAMES-1)-current_prep_frame)], ANIM_SIZE); // uncomment if IDLE_FRAMES >1
+             oled_write_raw_P(prep[0], ANIM_SIZE);  // remove if IDLE_FRAMES >1
+         }*/
+         if(get_current_wpm() >=TAP_SPEED){
+             current_tap_frame = (current_tap_frame + 1) % TAP_FRAMES;
+             oled_write_raw_P(tap[abs((TAP_FRAMES-1)-current_tap_frame)], ANIM_SIZE);
+         }
+    }
+
+    if(get_current_wpm() != 000) {
+        // oled_on(); // not essential but turns on animation OLED with any alpha keypress
+        if(timer_elapsed32(anim_timer) > ANIM_FRAME_DURATION) {
+            anim_timer = timer_read32();
+            animation_phase();
+        }
+        anim_sleep = timer_read32();
+    } else {
+        if(timer_elapsed32(anim_sleep) > OLED_TIMEOUT) {
+            // oled_off();
+        } else {
+            if(timer_elapsed32(anim_timer) > ANIM_FRAME_DURATION) {
+                anim_timer = timer_read32();
+                animation_phase();
+            }
+        }
     }
 }
 
@@ -381,8 +425,11 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     return OLED_ROTATION_0;
 }
 
-void oled_task_user(void) {
+bool oled_task_user(void) {
     print_status_narrow();
+    oled_set_cursor(0, 4);
+    render_anim();
+    return false;
 }
 
 #endif

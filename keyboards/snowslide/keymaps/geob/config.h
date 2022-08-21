@@ -1,18 +1,13 @@
 #pragma once
 
-#define OLED_FONT_H "keyboards/snowslide/keymaps/geobert/glcdfont.c"
+#define OLED_FONT_H "keyboards/snowslide/keymaps/geob/glcdfont.c"
 #define OLED_DISPLAY_128X64
+#define OLED_TIMEOUT 30000 // ms
 
 //#define USE_MATRIX_I2C
 
-/* Select hand configuration */
-
 ///https://thomasbaart.nl/2018/12/01/reducing-firmware-size-in-qmk/
 
-
-// #define MASTER_LEFT
-// #define MASTER_RIGHT
-// #define EE_HANDS
 
 // #define CUSTOM_FONT
 
