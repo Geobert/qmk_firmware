@@ -3,24 +3,24 @@
 #include QMK_KEYBOARD_H
 
 
-
+#include "features/layer_lock.h"
 #include "layout.c"
 
-bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        // case ALT_T_U:
-        // case LCTL_T_I:
-        // case LSFT_T_E:
-        case RSFT_T_T:
-        case RCTL_T_S:
-        case RCTL_T_R:
-        case RSFT_T_P4:
-        case ALGR_T_P5:
-            return true;
-        default:
-            return false;
-    }
-}
+// bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
+//     switch (keycode) {
+//         // case ALT_T_U:
+//         // case LCTL_T_I:
+//         // case LSFT_T_E:
+//         case RSFT_T_T:
+//         case RCTL_T_S:
+//         case RCTL_T_R:
+//         case RSFT_T_P4:
+//         case ALGR_T_P5:
+//             return true;
+//         default:
+//             return false;
+//     }
+// }
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -34,6 +34,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
 bool is_game = false;
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (!process_layer_lock(keycode, record, LLOCK)) { return false; }
+
     switch (keycode) {
         case TGL_GAME:
             if (record->event.pressed) {
@@ -363,11 +365,11 @@ static void print_status_narrow(void) {
 // WPM-responsive animation stuff here
 
 #include "../bongocat.h"
-#define IDLE_SPEED 30 // below this wpm value your animation will idle
+#define IDLE_SPEED 10 // below this wpm value your animation will idle
 
 // #define PREP_FRAMES 1 // uncomment if >1
 
-#define TAP_SPEED 45 // above this wpm value typing animation to triggere
+#define TAP_SPEED 30 // above this wpm value typing animation to triggere
 
 #define ANIM_FRAME_DURATION 200 // how long each frame lasts in ms
 // #define SLEEP_TIMER 60000 // should sleep after this period of 0 wpm, needs fixing
