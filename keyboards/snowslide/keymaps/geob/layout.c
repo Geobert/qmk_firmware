@@ -70,7 +70,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                  _______,  KC_F1,   KC_F2,     KC_F3,     KC_F4,    KC_F5,                                        KC_F6,      KC_F7,     KC_F8,   KC_F9,   KC_F10,  KC_F11,
                  KC_MUTE,  MV_LFT,  SPOTI_FAV, C(KC_SPC), FFX_DEL,  C(KC_PSCR),                                   DEL_LINE,   WD_LFT,    KC_UP,   WD_RGT,  KC_APP,  KC_F12,
         LLOCK,   _______,  UNDO,    KC_LALT,   KC_LCTRL,  KC_LSFT,  ALGR(KC_TAB), KC_MNXT,               KC_BSPC, KC_PGUP,    KC_LEFT,   KC_DOWN, KC_RGHT, KC_NO,   KC_LGUI, KC_PSCR,
-                 KC_CAPS,  REDO,    CUT,       COPY,      PASTE,    TLG,          DITTO,                 KC_VOLU, KC_PGDOWN,  KC_HOME,   KC_NO,   KC_END,  BP_F,    KC_NO,
+                 KC_CAPS,  REDO,    CUT,       COPY,      PASTE,    DITTO,        TLG,                   KC_VOLU, KC_PGDOWN,  KC_HOME,   KC_NO,   KC_END,  BP_F,    KC_NO,
                  KC_MPLY,                                 _______,  _______,      TG(_RED),     KC_SPC,  KC_ENT,  KC_VOLD,    KC_MPRV,   KC_NO,                     TGL_GAME
     ),
 
