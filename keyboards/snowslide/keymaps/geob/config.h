@@ -25,5 +25,8 @@
 #define TAPPING_TERM_PER_KEY
 #define TAPPING_TOGGLE 2
 
-
+#ifdef DEBOUNCE
+    #undef DEBOUNCE
+#endif
+#define DEBOUNCE 6
 

@@ -71,17 +71,11 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_BEPO] = LAYOUT(
-  //,------------------------------------------------.                    ,---------------------------------------------------.
   KC_ESC,   BP_DQUO, BP_LDAQ, BP_RDAQ, BP_LPRN, BP_RPRN,                   BP_AT,  BP_PLUS, BP_MINS, BP_SLSH, BP_ASTR,  BP_W ,
-  //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
   KC_TAB,    BP_B,   BP_EACU,  BP_P,   BP_O,   BP_EGRV,                   BP_DCIR,  BP_V,   BP_D,    BP_L,    BP_J,    BP_Z,
-  //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
   KC_LSFT,   BP_A,   BP_U,    BP_I,    BP_E,   BP_COMM,                   BP_C,    BP_T,   BP_S,   BP_R,     BP_N,      BP_M,
-  //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
      BP_EQL, BP_AGRV, BP_Y, BP_X,   BP_DOT,  BP_K,  KC_MPLY,  DISC_MUTE,  BP_QUOT, BP_Q,   BP_G,    BP_H,    BP_F,   BP_CCED ,
-  //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
                  KC_DEL, KC_LALT, KC_LCTL, TT(_RED), KC_SPC,     KC_ENT, TT(_BLUE), KC_RALT, KC_BSPC, KC_RSFT
-  //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
 ),
 
 [_GAME] = LAYOUT(
