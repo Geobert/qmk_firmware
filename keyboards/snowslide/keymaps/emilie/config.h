@@ -1,6 +1,6 @@
 #pragma once
 
-#define OLED_FONT_H "keyboards/snowslide/keymaps/geob/glcdfont.c"
+#define OLED_FONT_H "keyboards/snowslide/keymaps/emilie/glcdfont.c"
 #define OLED_DISPLAY_128X64
 #define OLED_TIMEOUT 30000 // ms
 
