@@ -56,7 +56,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_GAME] = LAYOUT(
                  KC_ESC,  BP_DQUO, BP_LDAQ, BP_RDAQ, BP_LPRN, BP_RPRN,                                            BP_AT,     BP_PLUS, BP_MINS, BP_SLSH, BP_ASTR, BP_W,
-                 KC_TAB,  BP_B,    BP_EACU, BP_CCED, BP_O,    BP_EGRV,                                            BP_DCIR,   BP_V,    BP_D,    BP_L,    BP_J,    BP_Z,
+                 KC_TAB,  BP_B,    BP_EACU, BP_W, BP_O,    BP_EGRV,                                            BP_DCIR,   BP_V,    BP_D,    BP_L,    BP_J,    BP_Z,
         KC_MPLY, KC_LSFT, BP_A,    BP_A,    BP_S,    BP_D,    BP_COMM,  KC_DEL,                        KC_BSPC,   BP_C,      BP_T,    BP_S,    BP_R,    BP_N,    BP_M,   KC_MUTE,
                  BP_EQL,  BP_AGRV, BP_Y,    BP_X,    BP_DOT,  BP_K,     KC_BSPC,                       KC_DEL,    BP_QUOT,   BP_Q,    BP_G,    BP_H,    BP_F,    BP_CCED,
                  KC_ENT,                             KC_LALT, KC_LCTL,  TT(_RED),  KC_SPC,     KC_ENT, TT(_BLUE), KC_BSPC,   KC_RALT,                            KC_RSFT

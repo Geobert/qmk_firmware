@@ -78,7 +78,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                  _______,  KC_F1,    KC_F2,     KC_F3,     KC_F4,    KC_F5,                                                 KC_F6,     KC_F7,   KC_F8,  KC_F9,  KC_F10,  KC_F11,
                  _______,  BP_BSLS,  BP_SHARP,  BP_LABK,   BP_RABK,  BP_ARRO,                                               KC_PMNS,   KC_P7,   KC_P8,  KC_P9,  KC_PSLS, KC_F12,
         LLOCK,   _______,  BP_PIPE,  BP_RCBR,   BP_LCBR,   BP_AMP,   BP_FARRO,  LLOCK,                          KC_BSPC,    KC_PPLS,   KC_P4,   KC_P5,  KC_P6,  KC_PAST, BP_EURO, KC_INS,
-                 _______,  BP_BSLS,  BP_PERC,   BP_DLR,    BP_LBRC,  BP_RBRC,   KC_DEL,                         KC_RALT,    KC_P0,     KC_P1,   KC_P2,  KC_P3,  BP_DLR,  BP_POUND,
+                 CAPSWRD,  BP_BSLS,  BP_PERC,   BP_DLR,    BP_LBRC,  BP_RBRC,   KC_DEL,                         KC_RALT,    KC_P0,     KC_P1,   KC_P2,  KC_P3,  BP_DLR,  BP_POUND,
                  _______,                                  _______,   _______,  _______, BP_UNDS,      KC_ENT,  TG(_BLUE),  KC_PDOT,  _______,                           A(KC_F4)
     )
 };
