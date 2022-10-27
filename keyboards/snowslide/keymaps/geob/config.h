@@ -28,5 +28,5 @@
 #ifdef DEBOUNCE
     #undef DEBOUNCE
 #endif
-#define DEBOUNCE 6
+#define DEBOUNCE 8
 
