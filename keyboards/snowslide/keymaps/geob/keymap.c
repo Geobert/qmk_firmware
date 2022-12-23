@@ -65,11 +65,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 set_mods(cur_mods);
             }
             break;
-        case BP_AMP:
-            if (record->event.pressed) {
-                tap_code16(BP_AMPR);
-            }
-            break;
+        // case BP_AMP:
+        //     if (record->event.pressed) {
+        //         tap_code16(BP_AMPR);
+        //     }
+        //     break;
         case BP_ARRO:
             if (record->event.pressed) {
                 uint8_t temp_mods = get_mods();  //store held mods
@@ -95,6 +95,47 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code16(BP_RABK);
                 set_mods(temp_mods);
             }
+            break;
+        case GRV_PWD:
+            if (record->event.pressed) {
+                uint8_t temp_mods = get_mods();  //store held mods
+                clear_mods();
+                if (temp_mods & MOD_MASK_SHIFT) {
+                    tap_code16(PASSMAN);
+                } else {
+                    tap_code16(BP_GRV);
+                }
+                set_mods(temp_mods);
+            }
+            break;
+        case MY_QUOT:
+            // for 1.0
+            // if (record->event.pressed) {
+            //     uint8_t temp_mods = get_mods();  //store held mods
+            //     clear_mods();
+            //     if (temp_mods & MOD_MASK_SHIFT) {
+            //         // narrow nbsp
+            //         tap_code16(ALGR(S(KC_SPC)));
+            //     } else {
+            //         tap_code16(TYPO_QUOT);
+            //     }
+            //     set_mods(temp_mods);
+            // }
+            // break;
+            // for 1.1g
+            if (record->event.pressed) {
+                uint8_t temp_mods = get_mods();  //store held mods
+                clear_mods();
+                if (temp_mods & MOD_MASK_SHIFT) {
+                    // nbsp
+                    tap_code16(ALGR(KC_SPC));
+                    set_mods(temp_mods);
+                } else {
+                    set_mods(temp_mods);
+                    tap_code16(TYPO_QUOT);
+                }
+            }
+            break;
     }
     return true;
 }
@@ -144,7 +185,7 @@ bool caps_word_press_user(uint16_t keycode) {
         case BP_0:
         case KC_BSPC:
         case KC_DEL:
-        case BP_UNDS:
+        case UNDS:
         case BP_MINS:
             return true;
 
