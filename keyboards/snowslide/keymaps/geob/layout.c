@@ -22,12 +22,12 @@
 #define CUT C(BP_X)
 #define COPY C(BP_C)
 #define PASTE C(BP_V)
-#define BP_POUND ALGR(S(BP_L))
+#define BP_POUND ALGR(S(BP_L)) //1.1
 #define SPOTI_FAV LSA(BP_B)
 #define FFX_DEL RCS(KC_DEL)
-#define TYPO_QUOT ALGR(BP_COMM)
+#define OTHER_QUOT ALGR(BP_COMM)
 #define ACC_CIR ALGR(BP_AT)
-#define UNDS ALGR(S(KC_SPC))
+#define UNDS ALGR(S(KC_SPC)) //1.1g
 
 // LAYERS SECTION
 enum snowslide_layers {
@@ -45,7 +45,7 @@ enum custom_keycodes {
     BP_FARRO,
     TGL_GAME,
     LLOCK,
-    GRV_PWD,
+    GRV_CIR,
     MY_QUOT,
 };
 
@@ -58,7 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BEPO] = LAYOUT(
                    KC_ESC,  BP_DQUO, BP_LDAQ, BP_RDAQ, BP_LPRN, BP_RPRN,                                            BP_AT,     BP_PLUS, BP_MINS, BP_SLSH, BP_ASTR, BP_CCED,
                    KC_TAB,  BP_B,    BP_EACU, BP_P,    BP_O,    BP_EGRV,                                            BP_DCIR,   BP_V,    BP_D,    BP_L,    BP_J,    BP_Z,
-        RCS(BP_F), KC_LSFT, BP_A,    BP_U,    BP_I,    BP_E,    BP_COMM, KC_DEL,                         GRV_PWD,   BP_C,      BP_T,    BP_S,    BP_R,    BP_N,    BP_M,   KC_RSFT,
+        RCS(BP_F), KC_LSFT, BP_A,    BP_U,    BP_I,    BP_E,    BP_COMM, KC_DEL,                         GRV_CIR,   BP_C,      BP_T,    BP_S,    BP_R,    BP_N,    BP_M,   KC_RSFT,
                    BP_EQL,  BP_AGRV, BP_Y,    BP_X,    BP_DOT,  BP_K,    KC_BSPC,                        MY_QUOT,   BP_QUOT,   BP_Q,    BP_G,    BP_H,    BP_F,    BP_W,
                    KC_ENT,                             KC_LALT, KC_LCTL, MO(_RED),  KC_SPC,     KC_ENT,  MO(_BLUE), KC_BSPC,   KC_RALT,                            LAUNCH
     ),
@@ -66,7 +66,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_GAME] = LAYOUT(
                  KC_ESC,  BP_DQUO, BP_LDAQ, BP_RDAQ, BP_LPRN, BP_RPRN,                                            BP_AT,     BP_PLUS, BP_MINS, BP_SLSH, BP_ASTR, BP_CCED,
                  KC_TAB,  BP_B,    BP_EACU, BP_CCED, BP_O,    BP_EGRV,                                            BP_DCIR,   BP_V,    BP_D,    BP_L,    BP_J,    BP_Z,
-        C(BP_S), KC_LSFT, BP_A,    BP_A,    BP_S,    BP_D,    BP_COMM, KC_DEL,                         GRV_PWD,   BP_C,      BP_T,    BP_S,    BP_R,    BP_N,    BP_M,   KC_RSFT,
+        C(BP_S), KC_LSFT, BP_A,    BP_A,    BP_S,    BP_D,    BP_COMM, KC_DEL,                         GRV_CIR,   BP_C,      BP_T,    BP_S,    BP_R,    BP_N,    BP_M,   KC_RSFT,
                  BP_EQL,  BP_AGRV, BP_Y,    BP_X,    BP_DOT,  BP_K,    KC_BSPC,                        MY_QUOT,   BP_QUOT,   BP_Q,    BP_G,    BP_H,    BP_F,    BP_W,
                  KC_ENT,                             KC_LALT, KC_LCTL, MO(_RED),  KC_SPC,     KC_ENT,  MO(_BLUE), KC_BSPC,   KC_RALT,                            LAUNCH
     ),
@@ -74,9 +74,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_RED] = LAYOUT(
                    _______,  KC_F1,   KC_F2,     KC_F3,     KC_F4,    KC_F5,                                                    KC_F6,      KC_F7,     KC_F8,   KC_F9,   KC_F10,     KC_F11,
                    KC_MUTE,  MV_LFT,  SPOTI_FAV, C(KC_SPC), FFX_DEL,  C(KC_PSCR),                                               DEL_LINE,   WD_LFT,    KC_UP,   WD_RGT,  KC_APP,     KC_F12,
-          DSCRD,   _______,  UNDO,    KC_LALT,   KC_LCTRL,  KC_LSFT,  ALGR(KC_TAB), KC_MNXT,                        ACC_CIR,    KC_PGUP,    KC_LEFT,   KC_DOWN, KC_RGHT, S(KC_F12),  KC_LGUI, KC_PSCR,
+          DSCRD,   _______,  UNDO,    KC_LALT,   KC_LCTRL,  KC_LSFT,  ALGR(KC_TAB), KC_MNXT,                        PASSMAN,    KC_PGUP,    KC_LEFT,   KC_DOWN, KC_RGHT, S(KC_F12),  KC_LGUI, KC_PSCR,
                    KC_CAPS,  REDO,    CUT,       COPY,      PASTE,    DITTO,        TLG,                            KC_MPRV,    KC_PGDOWN,  KC_HOME,   KC_NO,   KC_END,  BP_F,       KC_NO,
-                   CAPSWRD,                                 A(KC_F4), LLOCK,        TG(_RED), KC_SPC,      KC_ENT,  _______,    _______,   _______,                     TGL_GAME
+                   KC_MPLY,                                 A(KC_F4), LLOCK,        TG(_RED), KC_SPC,      KC_ENT,  _______,    _______,   _______,                     TGL_GAME
     ),
 
     [_BLUE] = LAYOUT(

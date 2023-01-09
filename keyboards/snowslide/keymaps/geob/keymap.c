@@ -96,12 +96,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 set_mods(temp_mods);
             }
             break;
-        case GRV_PWD:
+        case GRV_CIR:
             if (record->event.pressed) {
                 uint8_t temp_mods = get_mods();  //store held mods
                 clear_mods();
                 if (temp_mods & MOD_MASK_SHIFT) {
-                    tap_code16(PASSMAN);
+                    tap_code16(ACC_CIR);
                 } else {
                     tap_code16(BP_GRV);
                 }
@@ -132,7 +132,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     set_mods(temp_mods);
                 } else {
                     set_mods(temp_mods);
-                    tap_code16(TYPO_QUOT);
+                    tap_code16(OTHER_QUOT);
                 }
             }
             break;
