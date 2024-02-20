@@ -46,7 +46,7 @@
 #define BP_SLSH KC_9    // /
 #define BP_ASTR KC_0    // *
 #define BP_EQL  KC_MINS // =
-#define BP_PERC KC_EQL  // %
+#define BP_PERC KC_EQL  // %()
 // Row 2
 #define BP_B    KC_Q    // B
 #define BP_EACU KC_W    // É

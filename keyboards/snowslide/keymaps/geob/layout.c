@@ -9,7 +9,7 @@
 // move window to right screen
 #define MV_RGT SWIN(KC_RIGHT)
 
-#define DITTO LWIN(BP_AGRV)
+#define DITTO LWIN(BP_EQL)
 #define PASSMAN RCS(BP_W)
 #define DEL_LINE RCS(BP_K)
 #define LAUNCH A(KC_SPC)
@@ -36,6 +36,7 @@ enum snowslide_layers {
     _GAME,
     _RED,
     _BLUE,
+    _MEDIA
 };
 
 enum custom_keycodes {
@@ -46,7 +47,7 @@ enum custom_keycodes {
     TGL_GAME,
     LLOCK,
     GRV_CIR,
-    MY_QUOT,
+    MY_QUOT
 };
 
 // for bépo 1.1g
@@ -65,7 +66,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_GAME] = LAYOUT(
                  KC_ESC,  BP_DQUO, BP_LDAQ, BP_RDAQ, BP_LPRN, BP_RPRN,                                            BP_AT,     BP_PLUS, BP_MINS, BP_SLSH, BP_ASTR, BP_CCED,
-                 KC_TAB,  BP_B,    BP_EACU, BP_CCED, BP_O,    BP_EGRV,                                            BP_DCIR,   BP_V,    BP_D,    BP_L,    BP_J,    BP_Z,
+                 KC_TAB,  BP_B,    BP_EACU, BP_W   , BP_O,    BP_EGRV,                                            BP_DCIR,   BP_V,    BP_D,    BP_L,    BP_J,    BP_Z,
         C(BP_S), KC_LSFT, BP_A,    BP_A,    BP_S,    BP_D,    BP_COMM, KC_DEL,                         GRV_CIR,   BP_C,      BP_T,    BP_S,    BP_R,    BP_N,    BP_M,   KC_RSFT,
                  BP_EQL,  BP_AGRV, BP_Y,    BP_X,    BP_DOT,  BP_K,    KC_BSPC,                        MY_QUOT,   BP_QUOT,   BP_Q,    BP_G,    BP_H,    BP_F,    BP_W,
                  KC_ENT,                             KC_LALT, KC_LCTL, MO(_RED),  KC_SPC,     KC_ENT,  MO(_BLUE), KC_BSPC,   KC_RALT,                            LAUNCH
@@ -74,16 +75,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_RED] = LAYOUT(
                    _______,  KC_F1,   KC_F2,     KC_F3,     KC_F4,    KC_F5,                                                    KC_F6,      KC_F7,     KC_F8,   KC_F9,   KC_F10,     KC_F11,
                    KC_MUTE,  MV_LFT,  SPOTI_FAV, C(KC_SPC), FFX_DEL,  C(KC_PSCR),                                               DEL_LINE,   WD_LFT,    KC_UP,   WD_RGT,  KC_APP,     KC_F12,
-          DSCRD,   _______,  UNDO,    KC_LALT,   KC_LCTRL,  KC_LSFT,  ALGR(KC_TAB), KC_MNXT,                        PASSMAN,    KC_PGUP,    KC_LEFT,   KC_DOWN, KC_RGHT, S(KC_F12),  KC_LGUI, KC_PSCR,
-                   KC_CAPS,  REDO,    CUT,       COPY,      PASTE,    DITTO,        TLG,                            KC_MPRV,    KC_PGDOWN,  KC_HOME,   KC_NO,   KC_END,  BP_F,       KC_NO,
-                   KC_MPLY,                                 A(KC_F4), LLOCK,        TG(_RED), KC_SPC,      KC_ENT,  _______,    _______,   _______,                     TGL_GAME
+        KC_MNXT,   _______,  UNDO,    KC_LALT,   KC_LCTRL,  KC_LSFT,  ALGR(KC_TAB), DSCRD,                          PASSMAN,    KC_PGUP,    KC_LEFT,   KC_DOWN, KC_RGHT, S(KC_F12),  KC_LGUI, KC_PSCR,
+                   KC_CAPS,  REDO,    CUT,       COPY,      PASTE,    DITTO,        TLG,                            KC_MPRV,    KC_PGDOWN,  KC_HOME,   KC_NO,   KC_END,  BP_F,       LGUI(KC_SPC),
+                   KC_MPLY,                                 LLOCK,  TG(_MEDIA), TG(_RED), KC_SPC,          KC_ENT,  _______,    KC_RSFT,   KC_RCTL,                                  TGL_GAME
     ),
 
     [_BLUE] = LAYOUT(
-                 KC_NUM ,  KC_F1,    KC_F2,     KC_F3,     KC_F4,    KC_F5,                                                 KC_F6,     KC_F7,   KC_F8,  KC_F9,  KC_F10,  KC_F11,
-                 _______,  BP_BSLS,  BP_SHARP,  BP_LABK,   BP_RABK,  BP_ARRO,                                               KC_PMNS,   KC_P7,   KC_P8,  KC_P9,  KC_PSLS, KC_F12,
-        LLOCK,   _______,  BP_PIPE,  BP_RCBR,   BP_LCBR,   BP_AMPR,   BP_FARRO,  LLOCK,                          KC_BSPC,    KC_PPLS,   KC_P4,   KC_P5,  KC_P6,  KC_PAST, BP_EURO, KC_INS,
-                 _______,   BP_BSLS,  BP_PERC,   BP_DLR,   BP_LBRC,  BP_RBRC,   KC_DEL,                         KC_RALT,    KC_P0,     KC_P1,   KC_P2,  KC_P3,  BP_DLR,  BP_POUND,
-                 CAPSWRD,                                  _______,   _______,  CAPSWRD, UNDS,      KC_ENT,  TG(_BLUE),  KC_PDOT,  _______,                           A(KC_F4)
+                 KC_NUM ,  KC_F1,    KC_F2,     KC_F3,     KC_F4,    KC_F5,                                            KC_F6,     KC_F7,   KC_F8,  KC_F9,  KC_F10,  KC_F11,
+                 _______,  BP_ARRO,  BP_SHARP,  BP_AMPR,   BP_LABK,  BP_RABK,                                          KC_PPLS,   KC_P7,   KC_P8,  KC_P9,  KC_PSLS, KC_F12,
+        LLOCK,   _______,  BP_PIPE,  BP_RCBR,   BP_LCBR,   BP_LPRN,  BP_RPRN,   BP_FARRO,                  KC_RALT,    KC_PMNS,   KC_P4,   KC_P5,  KC_P6,  KC_PAST, BP_POUND, KC_INS,
+                 _______,   BP_BSLS,  BP_PERC,   BP_DLR,   BP_LBRC,  BP_RBRC,   KC_DEL,                    KC_PDOT,    KC_P0,     KC_P1,   KC_P2,  KC_P3,  BP_EURO, BP_DLR,
+                 CAPSWRD,                                  _______,   _______,  LLOCK, UNDS,      KC_ENT,  TG(_BLUE),  KC_BSPC,  _______,                           A(KC_F4)
+    ),
+
+    [_MEDIA] = LAYOUT(
+                 _______ ,  KC_F1,    KC_F2,     KC_F3,     KC_F4,    KC_F5,                                            KC_F6,     KC_F7,   KC_F8,    KC_F9,  KC_F10,  KC_F11,
+                 _______,  _______,  BP_F,      KC_UP,     _______,  _______,                                           KC_PPLS,   KC_P7,   KC_UP,    KC_P9,  KC_PSLS, KC_F12,
+        _______, _______,  _______,  KC_LEFT,   KC_DOWN,   KC_RIGHT,  _______,   BP_F,                       KC_RALT,   KC_PMNS,   KC_LEFT, KC_DOWN,  KC_RIGHT,  KC_PAST, BP_F, KC_INS,
+                 _______,   _______,  _______,   _______,   _______,  _______,   _______,                    KC_PDOT,    KC_P0,     KC_P1,   KC_P2,    KC_P3,  BP_F, BP_DLR,
+                 _______,                                  _______,   TG(_MEDIA),  TG(_MEDIA), KC_SPC,      KC_ENT,  TG(_BLUE),  KC_BSPC,  _______,                           TG(_MEDIA)
     )
 };

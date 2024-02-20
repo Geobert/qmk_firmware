@@ -32,19 +32,19 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-bool is_game = false;
+bool is_bepo = false;
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_layer_lock(keycode, record, LLOCK)) { return false; }
 
     switch (keycode) {
         case TGL_GAME:
             if (record->event.pressed) {
-                if (is_game) {
-                    is_game = false;
-                    default_layer_set(1UL << _BEPO);
+                if (is_bepo) {
+                    is_bepo = false;
+                    default_layer_set(1UL << _ERGOL);
                 } else {
-                    is_game = true;
-                    default_layer_set(1UL << _GAME);
+                    is_bepo = true;
+                    default_layer_set(1UL << _BEPO);
                 }
             }
             break;
@@ -75,11 +75,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 uint8_t temp_mods = get_mods();  //store held mods
                 clear_mods();
                 if (temp_mods & MOD_MASK_SHIFT) {
-                    tap_code16(BP_EQL);
+                    tap_code16(EL_EQL);
                 } else {
-                    tap_code16(BP_MINS);
+                    tap_code16(EL_MINS);
                 }
-                tap_code16(BP_RABK);
+                tap_code16(EL_RABK);
                 set_mods(temp_mods);
             }
             break;
@@ -88,11 +88,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 uint8_t temp_mods = get_mods();  //store held mods
                 clear_mods();
                 if (temp_mods & MOD_MASK_SHIFT) {
-                    tap_code16(BP_MINS);
+                    tap_code16(EL_MINS);
                 } else {
-                    tap_code16(BP_EQL);
+                    tap_code16(EL_EQL);
                 }
-                tap_code16(BP_RABK);
+                tap_code16(EL_RABK);
                 set_mods(temp_mods);
             }
             break;
@@ -103,7 +103,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (temp_mods & MOD_MASK_SHIFT) {
                     tap_code16(ACC_CIR);
                 } else {
-                    tap_code16(BP_GRV);
+                    tap_code16(EL_GRV);
                 }
                 set_mods(temp_mods);
             }
@@ -143,50 +143,50 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 bool caps_word_press_user(uint16_t keycode) {
     switch (keycode) {
         // Keycodes that continue Caps Word, with shift applied.
-        case BP_A:
-        case BP_B:
-        case BP_C:
-        case BP_D:
-        case BP_E:
-        case BP_F:
-        case BP_G:
-        case BP_H:
-        case BP_I:
-        case BP_J:
-        case BP_K:
-        case BP_L:
-        case BP_M:
-        case BP_N:
-        case BP_O:
-        case BP_P:
-        case BP_Q:
-        case BP_R:
-        case BP_S:
-        case BP_T:
-        case BP_U:
-        case BP_V:
-        case BP_W:
-        case BP_X:
-        case BP_Y:
-        case BP_Z:
+        case EL_A:
+        case EL_B:
+        case EL_C:
+        case EL_D:
+        case EL_E:
+        case EL_F:
+        case EL_G:
+        case EL_H:
+        case EL_I:
+        case EL_J:
+        case EL_K:
+        case EL_L:
+        case EL_M:
+        case EL_N:
+        case EL_O:
+        case EL_P:
+        case EL_Q:
+        case EL_R:
+        case EL_S:
+        case EL_T:
+        case EL_U:
+        case EL_V:
+        case EL_W:
+        case EL_X:
+        case EL_Y:
+        case EL_Z:
             add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
             return true;
 
         // Keycodes that continue Caps Word, without shifting.
-        case BP_1:
-        case BP_2:
-        case BP_3:
-        case BP_4:
-        case BP_5:
-        case BP_6:
-        case BP_7:
-        case BP_8:
-        case BP_9:
-        case BP_0:
+        case EL_1:
+        case EL_2:
+        case EL_3:
+        case EL_4:
+        case EL_5:
+        case EL_6:
+        case EL_7:
+        case EL_8:
+        case EL_9:
+        case EL_0:
         case KC_BSPC:
         case KC_DEL:
         case UNDS:
-        case BP_MINS:
+        case EL_MINS:
             return true;
 
         default:
@@ -444,13 +444,13 @@ void print_base_layer(uint8_t col, uint8_t line) {
 
     oled_set_cursor(col, line);
     switch (get_highest_layer(default_layer_state)) {
-        case _BEPO:
+        case _ERGOL:
             // oled_write_P(PSTR("Bepo"), false);
             oled_write_P(bepo1, false);
             oled_set_cursor(col, line + 1);
             oled_write_P(bepo2, false);
             break;
-        case _GAME:
+        case _BEPO:
             oled_write_P(game1, false);
             oled_set_cursor(col, line + 1);
             oled_write_P(game2, false);
