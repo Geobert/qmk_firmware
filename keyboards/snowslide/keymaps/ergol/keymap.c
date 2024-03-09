@@ -24,8 +24,9 @@
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case TT(_RED):
-        case TT(_BLUE):
+        case TT(_SYM):
+        case TT(_NAV):
+        case TT(_NUM):
             return 90;
         default:
             return TAPPING_TERM;
@@ -48,54 +49,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
-        case BP_SHARP:
-            if (record->event.pressed) {
-                uint8_t cur_mods = get_mods();
-                if (cur_mods & MOD_MASK_SHIFT) {
-                    register_mods(mod_config(MOD_RALT));
-                } else {
-                    register_mods(mod_config(MOD_LSFT));
-                }
-                tap_code16(BP_DLR);
-                if (cur_mods & MOD_MASK_SHIFT) {
-                    unregister_mods(mod_config(MOD_RALT));
-                } else {
-                    unregister_mods(mod_config(MOD_LSFT));
-                }
-                set_mods(cur_mods);
-            }
-            break;
-        // case BP_AMP:
-        //     if (record->event.pressed) {
-        //         tap_code16(BP_AMPR);
-        //     }
-        //     break;
-        case BP_ARRO:
-            if (record->event.pressed) {
-                uint8_t temp_mods = get_mods();  //store held mods
-                clear_mods();
-                if (temp_mods & MOD_MASK_SHIFT) {
-                    tap_code16(EL_EQL);
-                } else {
-                    tap_code16(EL_MINS);
-                }
-                tap_code16(EL_RABK);
-                set_mods(temp_mods);
-            }
-            break;
-        case BP_FARRO:
-            if (record->event.pressed) {
-                uint8_t temp_mods = get_mods();  //store held mods
-                clear_mods();
-                if (temp_mods & MOD_MASK_SHIFT) {
-                    tap_code16(EL_MINS);
-                } else {
-                    tap_code16(EL_EQL);
-                }
-                tap_code16(EL_RABK);
-                set_mods(temp_mods);
-            }
-            break;
         case GRV_CIR:
             if (record->event.pressed) {
                 uint8_t temp_mods = get_mods();  //store held mods
@@ -109,19 +62,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
         case MY_QUOT:
-            // for 1.0
-            // if (record->event.pressed) {
-            //     uint8_t temp_mods = get_mods();  //store held mods
-            //     clear_mods();
-            //     if (temp_mods & MOD_MASK_SHIFT) {
-            //         // narrow nbsp
-            //         tap_code16(ALGR(S(KC_SPC)));
-            //     } else {
-            //         tap_code16(TYPO_QUOT);
-            //     }
-            //     set_mods(temp_mods);
-            // }
-            // break;
             // for 1.1g
             if (record->event.pressed) {
                 uint8_t temp_mods = get_mods();  //store held mods
@@ -134,6 +74,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     set_mods(temp_mods);
                     tap_code16(OTHER_QUOT);
                 }
+            }
+            break;
+        case EL_POUND:
+            if (record->event.pressed) {
+                uint8_t temp_mods = get_mods();  //store held mods
+                clear_mods();
+                tap_code16(KC_O);
+                tap_code16(KC_4);
+                set_mods(temp_mods);
             }
             break;
     }
@@ -185,7 +134,6 @@ bool caps_word_press_user(uint16_t keycode) {
         case EL_0:
         case KC_BSPC:
         case KC_DEL:
-        case UNDS:
         case EL_MINS:
             return true;
 
@@ -399,9 +347,9 @@ void print_raise_and_lower_layer(uint8_t col, uint8_t line) {
 void render_layer_state(uint8_t col, uint8_t line) {
     oled_set_cursor(col, line);
 
-    if (layer_state_is(_BLUE)) {
+    if (layer_state_is(_SYM)) {
         print_lower_layer(col, line);
-    } else if (layer_state_is(_RED)) {
+    } else if (layer_state_is(_NAV)) {
         print_raise_layer(col, line);
     } else if (layer_state_is(_MEDIA)) {
         print_raise_and_lower_layer(col, line);
