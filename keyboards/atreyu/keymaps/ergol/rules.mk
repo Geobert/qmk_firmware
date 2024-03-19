@@ -1,3 +1,5 @@
+# Bootloader selection
+BOOTLOADER = rp2040
 ENCODER_ENABLE = no
 OLED_ENABLE = yes
 EXTRAKEY_ENABLE = yes

@@ -24,78 +24,70 @@
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case TT(_RED):
-        case TT(_BLUE):
+        case TT(_SYM):
+        case TT(_NAV):
+        case TT(_NUM):
+        case TT(_TYPO):
             return 90;
         default:
             return TAPPING_TERM;
     }
 }
 
-bool is_game = false;
+bool is_bepo = false;
+bool typo_pressed = false;
+bool can_release_typo = false;
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_layer_lock(keycode, record, LLOCK)) { return false; }
 
+    if (record->event.pressed && IS_LAYER_ON(_TYPO)) {
+        if (!typo_pressed) {
+            clear_oneshot_layer_state(ONESHOT_PRESSED);
+        } else {
+            can_release_typo = true;
+        }
+        tap_code16(KC_O);
+        if (keycode == KC_O)
+        {
+            tap_code16(KC_O);
+        }
+
+        return true;
+    }
+
     switch (keycode) {
+        case TYPO:
+            if (record->event.pressed) {
+                typo_pressed      = true;
+                uint8_t temp_mods = get_mods(); // store held mods
+                if (temp_mods & MOD_MASK_SHIFT) {
+                    tap_code16(KC_O);
+                } else {
+                    set_oneshot_layer(_TYPO, ONESHOT_START);
+                    return false;
+                }
+            } else {
+                typo_pressed = false;
+                if (can_release_typo)
+                {
+                    can_release_typo = false;
+                    clear_oneshot_layer_state(ONESHOT_PRESSED);
+                }
+
+            }
+
+            break;
         case TGL_GAME:
             if (record->event.pressed) {
-                if (is_game) {
-                    is_game = false;
-                    default_layer_set(1UL << _BEPO);
+                if (is_bepo) {
+                    is_bepo = false;
+                    default_layer_set(1UL << _ERGOL);
                 } else {
-                    is_game = true;
+                    is_bepo = true;
                     default_layer_set(1UL << _GAME);
                 }
             }
             break;
-        case BP_SHARP:
-            if (record->event.pressed) {
-                uint8_t cur_mods = get_mods();
-                if (cur_mods & MOD_MASK_SHIFT) {
-                    register_mods(mod_config(MOD_RALT));
-                } else {
-                    register_mods(mod_config(MOD_LSFT));
-                }
-                tap_code16(BP_DLR);
-                if (cur_mods & MOD_MASK_SHIFT) {
-                    unregister_mods(mod_config(MOD_RALT));
-                } else {
-                    unregister_mods(mod_config(MOD_LSFT));
-                }
-                set_mods(cur_mods);
-            }
-            break;
-        // case BP_AMP:
-        //     if (record->event.pressed) {
-        //         tap_code16(BP_AMPR);
-        //     }
-        //     break;
-        // case BP_ARRO:
-        //     if (record->event.pressed) {
-        //         uint8_t temp_mods = get_mods();  //store held mods
-        //         clear_mods();
-        //         if (temp_mods & MOD_MASK_SHIFT) {
-        //             tap_code16(BP_EQL);
-        //         } else {
-        //             tap_code16(BP_MINS);
-        //         }
-        //         tap_code16(BP_RABK);
-        //         set_mods(temp_mods);
-        //     }
-        //     break;
-        // case BP_FARRO:
-        //     if (record->event.pressed) {
-        //         uint8_t temp_mods = get_mods();  //store held mods
-        //         clear_mods();
-        //         if (temp_mods & MOD_MASK_SHIFT) {
-        //             tap_code16(BP_MINS);
-        //         } else {
-        //             tap_code16(BP_EQL);
-        //         }
-        //         tap_code16(BP_RABK);
-        //         set_mods(temp_mods);
-        //     }
-        //     break;
         case GRV_CIR:
             if (record->event.pressed) {
                 uint8_t temp_mods = get_mods();  //store held mods
@@ -103,37 +95,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (temp_mods & MOD_MASK_SHIFT) {
                     tap_code16(ACC_CIR);
                 } else {
-                    tap_code16(BP_GRV);
+                    tap_code16(EL_GRV);
                 }
                 set_mods(temp_mods);
             }
             break;
-        case MY_QUOT:
-            // for 1.0
-            // if (record->event.pressed) {
-            //     uint8_t temp_mods = get_mods();  //store held mods
-            //     clear_mods();
-            //     if (temp_mods & MOD_MASK_SHIFT) {
-            //         // narrow nbsp
-            //         tap_code16(ALGR(S(KC_SPC)));
-            //     } else {
-            //         tap_code16(TYPO_QUOT);
-            //     }
-            //     set_mods(temp_mods);
-            // }
-            // break;
-            // for 1.1g
+        case EL_POUND:
             if (record->event.pressed) {
                 uint8_t temp_mods = get_mods();  //store held mods
                 clear_mods();
-                if (temp_mods & MOD_MASK_SHIFT) {
-                    // nbsp
-                    tap_code16(ALGR(KC_SPC));
-                    set_mods(temp_mods);
-                } else {
-                    set_mods(temp_mods);
-                    tap_code16(OTHER_QUOT);
-                }
+                tap_code16(KC_O);
+                tap_code16(KC_4);
+                set_mods(temp_mods);
             }
             break;
     }
@@ -143,50 +116,49 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 bool caps_word_press_user(uint16_t keycode) {
     switch (keycode) {
         // Keycodes that continue Caps Word, with shift applied.
-        case BP_A:
-        case BP_B:
-        case BP_C:
-        case BP_D:
-        case BP_E:
-        case BP_F:
-        case BP_G:
-        case BP_H:
-        case BP_I:
-        case BP_J:
-        case BP_K:
-        case BP_L:
-        case BP_M:
-        case BP_N:
-        case BP_O:
-        case BP_P:
-        case BP_Q:
-        case BP_R:
-        case BP_S:
-        case BP_T:
-        case BP_U:
-        case BP_V:
-        case BP_W:
-        case BP_X:
-        case BP_Y:
-        case BP_Z:
+        case EL_A:
+        case EL_B:
+        case EL_C:
+        case EL_D:
+        case EL_E:
+        case EL_F:
+        case EL_G:
+        case EL_H:
+        case EL_I:
+        case EL_J:
+        case EL_K:
+        case EL_L:
+        case EL_M:
+        case EL_N:
+        case EL_O:
+        case EL_P:
+        case EL_Q:
+        case EL_R:
+        case EL_S:
+        case EL_T:
+        case EL_U:
+        case EL_V:
+        case EL_W:
+        case EL_X:
+        case EL_Y:
+        case EL_Z:
             add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
             return true;
 
         // Keycodes that continue Caps Word, without shifting.
-        case BP_1:
-        case BP_2:
-        case BP_3:
-        case BP_4:
-        case BP_5:
-        case BP_6:
-        case BP_7:
-        case BP_8:
-        case BP_9:
-        case BP_0:
+        case EL_1:
+        case EL_2:
+        case EL_3:
+        case EL_4:
+        case EL_5:
+        case EL_6:
+        case EL_7:
+        case EL_8:
+        case EL_9:
+        case EL_0:
         case KC_BSPC:
         case KC_DEL:
-        case UNDS:
-        case BP_MINS:
+        case EL_MINS:
             return true;
 
         default:
@@ -399,9 +371,9 @@ void print_raise_and_lower_layer(uint8_t col, uint8_t line) {
 void render_layer_state(uint8_t col, uint8_t line) {
     oled_set_cursor(col, line);
 
-    if (layer_state_is(_BLUE)) {
+    if (layer_state_is(_SYM)) {
         print_lower_layer(col, line);
-    } else if (layer_state_is(_RED)) {
+    } else if (layer_state_is(_NAV)) {
         print_raise_layer(col, line);
     } else if (layer_state_is(_MEDIA)) {
         print_raise_and_lower_layer(col, line);
@@ -444,7 +416,7 @@ void print_base_layer(uint8_t col, uint8_t line) {
 
     oled_set_cursor(col, line);
     switch (get_highest_layer(default_layer_state)) {
-        case _BEPO:
+        case _ERGOL:
             // oled_write_P(PSTR("Bepo"), false);
             oled_write_P(bepo1, false);
             oled_set_cursor(col, line + 1);
@@ -476,7 +448,7 @@ static void print_status_narrow(void) {
 
 // WPM-responsive animation stuff here
 
-#include "../bongocat.h"
+#include "bongocat.h"
 #define IDLE_SPEED 10 // below this wpm value your animation will idle
 
 // #define PREP_FRAMES 1 // uncomment if >1
@@ -536,7 +508,7 @@ static void render_anim(void) {
 }
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-    return OLED_ROTATION_0;
+    return OLED_ROTATION_180;
 }
 
 bool oled_task_user(void) {
