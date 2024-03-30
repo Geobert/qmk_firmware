@@ -56,7 +56,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB  , KC_Q, KC_W,    KC_E,    KC_R,      KC_T,                        KC_Y,     KC_U,     KC_I,     TYPO,    KC_P,    DSCRD,
     OLSFT    , KC_A, KC_S,    KC_D,    KC_F,      KC_G,                       KC_H,     KC_J,     KC_K,     KC_L,    KC_SCLN, ORSFT,
     KC_LGUI , KC_Z, KC_X,    KC_C,    KC_V,      KC_B,                        KC_N,     KC_M,     KC_COMM,  KC_DOT,  KC_SLSH, C(EL_K),
-    KC_ENT  ,       KC_LALT, KC_LCTL, OSL(_NAV),  KC_SPC, KC_DEL,    GRV_CIR, KC_BSPC,  OSL(_SYM), OSL(_NUM), KC_MPLY,           LAUNCH
+    KC_ENT  ,       KC_LALT, KC_LCTL, MO(_NAV),  KC_SPC, KC_DEL,    GRV_CIR, KC_BSPC,  OSL(_SYM), OSL(_NUM), KC_MPLY,           LAUNCH
 ),
 
 [_GAME] = LAYOUT(
@@ -64,7 +64,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB  , KC_Q, KC_W,    KC_E,    KC_R,      KC_T,                        KC_Y,     KC_U,     KC_I,     KC_O,    KC_P,    DSCRD,
     OLSFT    , KC_A, KC_S,    KC_D,    KC_F,      KC_G,                       KC_H,     KC_J,     KC_K,     KC_L,    KC_SCLN, ORSFT,
     KC_LGUI , KC_Z, KC_X,    KC_C,    KC_V,      KC_B,                        KC_N,     KC_M,     KC_COMM,  KC_DOT,  KC_SLSH, C(EL_K),
-    KC_ENT  ,       KC_LALT, KC_LCTL, OSL(_NAV),  KC_SPC, KC_DEL,    GRV_CIR, KC_BSPC,  OSL(_SYM), OSL(_NUM), KC_MPLY,           LAUNCH
+    KC_ENT  ,       KC_LALT, KC_LCTL, MO(_NAV),  KC_SPC, KC_DEL,    GRV_CIR, KC_BSPC,  OSL(_SYM), OSL(_NUM), KC_MPLY,           LAUNCH
 ),
 
 [_TYPO] = LAYOUT(
@@ -72,7 +72,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB  , KC_Q, KC_W,    KC_E,    KC_R,      KC_T,                        KC_Y,     KC_U,     KC_I,     KC_O,    KC_P,    DSCRD,
     OLSFT    , KC_A, KC_S,    KC_D,    KC_F,      KC_G,                       KC_H,     KC_J,     KC_K,     KC_L,    KC_SCLN, ORSFT,
     KC_LGUI , KC_Z, KC_X,    KC_C,    KC_V,      KC_B,                        KC_N,     KC_M,     KC_COMM,  KC_DOT,  KC_SLSH, C(EL_K),
-    KC_ENT  ,       KC_LALT, KC_LCTL, OSL(_NAV),  KC_SPC, KC_DEL,    GRV_CIR, KC_BSPC,  OSL(_SYM), OSL(_NUM), KC_MPLY,           LAUNCH
+    KC_ENT  ,       KC_LALT, KC_LCTL, MO(_NAV),  KC_SPC, KC_DEL,    GRV_CIR, KC_BSPC,  OSL(_SYM), OSL(_NUM), KC_MPLY,           LAUNCH
 ),
 
 [_NAV] = LAYOUT(
@@ -87,12 +87,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,  KC_F1,   KC_F2,     KC_F3,      KC_F4,    KC_F5,                         KC_F6,     KC_F7,     KC_F8,     KC_F9,   KC_F10,     KC_F11,
     _______,  KC_NO,   KC_PPLS,   KC_PMNS,    KC_PAST,  KC_PSLS,                       KC_MINS,   XXXXXXX,   XXXXXXX,   XXXXXXX,  XXXXXXX,   KC_F12,
     KC_NUM,   KC_1,    KC_2,      KC_3,       KC_4,     KC_5,                          KC_6,      KC_7,      KC_8,      KC_9,    KC_0,       KC_LGUI,
-    _______,  KC_NO,   S(KC_4),   EL_POUND,   S(KC_1),  KC_N,                          KC_N,      KC_PPLS,   KC_PMNS,   KC_PAST, KC_PSLS,    LGUI(KC_SPC),
+    _______,  KC_NO,   S(KC_4),   EL_POUND,   S(KC_1),  KC_N,                          S(KC_5),   KC_PPLS,   KC_PMNS,   KC_PAST, KC_PSLS,    LGUI(KC_SPC),
     _______,           LLOCK,     TG(_MEDIA), TG(_NAV), KC_SPC,   TLG,      QK_BOOT ,  TG(_NUM),  TG(_NUM),  TG(_NUM),  KC_RCTL,             KC_ENT
 ),
 
 [_SYM] = LAYOUT(
-    KC_ESC,  KC_1,       KC_2,          KC_3,          KC_4,          KC_5,                          KC_6,           KC_7,          KC_8,          KC_9,          KC_0,          KC_NO,
+    KC_ESC,  ALGR(KC_1), ALGR(KC_2),    ALGR(KC_3),    ALGR(KC_4),    ALGR(KC_5),                    ALGR(KC_6),     ALGR(KC_7),    ALGR(KC_8),    ALGR(KC_9),    ALGR(KC_0),          KC_NO,
     KC_TAB,  ALGR(KC_Q), ALGR(KC_W),    ALGR(KC_E),    ALGR(KC_R),    ALGR(KC_T),                    ALGR(KC_Y),     ALGR(KC_U),    ALGR(KC_I),    ALGR(KC_O),    ALGR(KC_P),    KC_NO,
     OLSFT ,  ALGR(KC_A), ALGR(KC_S),    ALGR(KC_D),    ALGR(KC_F),    ALGR(KC_G),                    ALGR(KC_H),     ALGR(KC_J),    ALGR(KC_K),    ALGR(KC_L),    ALGR(KC_SCLN), ORSFT,
     KC_NO,   ALGR(KC_Z), ALGR(KC_X),    ALGR(KC_C),    ALGR(KC_V),    ALGR(KC_B),                    ALGR(KC_N),     ALGR(KC_M),    ALGR(KC_COMM), ALGR(KC_DOT),  ALGR(KC_SLSH), KC_NO,

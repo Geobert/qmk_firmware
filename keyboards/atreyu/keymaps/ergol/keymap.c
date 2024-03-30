@@ -43,7 +43,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed && IS_LAYER_ON(_TYPO)) {
         if (!typo_pressed) {
             clear_oneshot_layer_state(ONESHOT_PRESSED);
+            if (keycode == KC_BSPC || keycode == KC_DEL) {
+                return true;
+            }
         } else {
+            set_oneshot_layer(_TYPO, ONESHOT_START);
             can_release_typo = true;
         }
         tap_code16(KC_O);
