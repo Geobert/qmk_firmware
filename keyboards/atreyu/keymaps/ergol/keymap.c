@@ -44,17 +44,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (!typo_pressed) {
             clear_oneshot_layer_state(ONESHOT_PRESSED);
             if (keycode == KC_BSPC || keycode == KC_DEL) {
-                return true;
+                return false;
             }
         } else {
             set_oneshot_layer(_TYPO, ONESHOT_START);
             can_release_typo = true;
         }
         tap_code16(KC_O);
-        if (keycode == KC_O)
-        {
-            tap_code16(KC_O);
-        }
+        // if (keycode == KC_O)
+        // {
+        //     tap_code16(KC_O);
+        // }
 
         return true;
     }
@@ -113,6 +113,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 set_mods(temp_mods);
             }
             break;
+        case EL_MINS:
+            if (record->event.pressed && is_caps_word_on()) {
+                uint8_t temp_mods = get_mods();  //store held mods
+                clear_mods();
+                tap_code16(ALGR(KC_V));
+                set_mods(temp_mods);
+                return false;
+            }
+            break;
     }
     return true;
 }
@@ -146,23 +155,13 @@ bool caps_word_press_user(uint16_t keycode) {
         case EL_X:
         case EL_Y:
         case EL_Z:
+        case EL_MINS:
             add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
             return true;
-
         // Keycodes that continue Caps Word, without shifting.
-        case EL_1:
-        case EL_2:
-        case EL_3:
-        case EL_4:
-        case EL_5:
-        case EL_6:
-        case EL_7:
-        case EL_8:
-        case EL_9:
-        case EL_0:
+        case KC_1 ... KC_0:
         case KC_BSPC:
         case KC_DEL:
-        case EL_MINS:
             return true;
 
         default:

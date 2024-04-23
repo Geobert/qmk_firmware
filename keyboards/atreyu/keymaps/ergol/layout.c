@@ -56,7 +56,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB  , KC_Q, KC_W,    KC_E,    KC_R,      KC_T,                        KC_Y,     KC_U,     KC_I,     TYPO,    KC_P,    DSCRD,
     OLSFT    , KC_A, KC_S,    KC_D,    KC_F,      KC_G,                       KC_H,     KC_J,     KC_K,     KC_L,    KC_SCLN, ORSFT,
     KC_LGUI , KC_Z, KC_X,    KC_C,    KC_V,      KC_B,                        KC_N,     KC_M,     KC_COMM,  KC_DOT,  KC_SLSH, C(EL_K),
-    KC_ENT  ,       KC_LALT, KC_LCTL, MO(_NAV),  KC_SPC, KC_DEL,    GRV_CIR, KC_BSPC,  OSL(_SYM), OSL(_NUM), KC_MPLY,           LAUNCH
+    KC_ENT  ,       KC_LALT, KC_LCTL, MO(_NAV),  KC_SPC, KC_DEL,     KC_BSPC, KC_RSFT, OSL(_SYM), OSL(_NUM), KC_MPLY,           LAUNCH
 ),
 
 [_GAME] = LAYOUT(
@@ -64,7 +64,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB  , KC_Q, KC_W,    KC_E,    KC_R,      KC_T,                        KC_Y,     KC_U,     KC_I,     KC_O,    KC_P,    DSCRD,
     OLSFT    , KC_A, KC_S,    KC_D,    KC_F,      KC_G,                       KC_H,     KC_J,     KC_K,     KC_L,    KC_SCLN, ORSFT,
     KC_LGUI , KC_Z, KC_X,    KC_C,    KC_V,      KC_B,                        KC_N,     KC_M,     KC_COMM,  KC_DOT,  KC_SLSH, C(EL_K),
-    KC_ENT  ,       KC_LALT, KC_LCTL, MO(_NAV),  KC_SPC, KC_DEL,    GRV_CIR, KC_BSPC,  OSL(_SYM), OSL(_NUM), KC_MPLY,           LAUNCH
+    KC_ENT  ,       KC_LALT, KC_LCTL, MO(_NAV),  KC_SPC, KC_DEL,    KC_BSPC, KC_RSFT,  OSL(_SYM), OSL(_NUM), KC_MPLY,           LAUNCH
 ),
 
 [_TYPO] = LAYOUT(
@@ -72,7 +72,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB  , KC_Q, KC_W,    KC_E,    KC_R,      KC_T,                        KC_Y,     KC_U,     KC_I,     KC_O,    KC_P,    DSCRD,
     OLSFT    , KC_A, KC_S,    KC_D,    KC_F,      KC_G,                       KC_H,     KC_J,     KC_K,     KC_L,    KC_SCLN, ORSFT,
     KC_LGUI , KC_Z, KC_X,    KC_C,    KC_V,      KC_B,                        KC_N,     KC_M,     KC_COMM,  KC_DOT,  KC_SLSH, C(EL_K),
-    KC_ENT  ,       KC_LALT, KC_LCTL, MO(_NAV),  KC_SPC, KC_DEL,    GRV_CIR, KC_BSPC,  OSL(_SYM), OSL(_NUM), KC_MPLY,           LAUNCH
+    KC_ENT  ,       KC_LALT, KC_LCTL, MO(_NAV),  KC_SPC, KC_DEL,    KC_BSPC, KC_RSFT,  OSL(_SYM), OSL(_NUM), KC_MPLY,           LAUNCH
 ),
 
 [_NAV] = LAYOUT(
@@ -96,7 +96,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,  ALGR(KC_Q), ALGR(KC_W),    ALGR(KC_E),    ALGR(KC_R),    ALGR(KC_T),                    ALGR(KC_Y),     ALGR(KC_U),    ALGR(KC_I),    ALGR(KC_O),    ALGR(KC_P),    KC_NO,
     OLSFT ,  ALGR(KC_A), ALGR(KC_S),    ALGR(KC_D),    ALGR(KC_F),    ALGR(KC_G),                    ALGR(KC_H),     ALGR(KC_J),    ALGR(KC_K),    ALGR(KC_L),    ALGR(KC_SCLN), ORSFT,
     KC_NO,   ALGR(KC_Z), ALGR(KC_X),    ALGR(KC_C),    ALGR(KC_V),    ALGR(KC_B),                    ALGR(KC_N),     ALGR(KC_M),    ALGR(KC_COMM), ALGR(KC_DOT),  ALGR(KC_SLSH), KC_NO,
-    CW_TOGG,             LLOCK,         KC_LCTL,       _______,       KC_SPC,     KC_DEL,  GRV_CIR,  KC_BSPC,        TG(_SYM),       MO(_NUM),     _______,                      KC_ENT
+    CW_TOGG,             LLOCK,         KC_LCTL,       _______,       KC_SPC,     KC_DEL,  KC_BSPC,  MOD_RSFT,        TG(_SYM),       MO(_NUM),     _______,                      KC_ENT
 ),
 
 [_MEDIA] = LAYOUT(
